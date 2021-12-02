@@ -24,7 +24,7 @@
 	</html>
 	';
 
-	mail($_POST['email'], "Commande !", $message, $header);
+	mail($_POST['email'], "Stage !", $message, $header);
 		
 
 	
