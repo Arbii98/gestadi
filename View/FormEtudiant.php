@@ -41,7 +41,7 @@ require "header.php";
                     <h2 class="title">Formulaire de stage</h2>
                 </div>
                 <div class="card-body">
-                     <form method="POST" action="../Controller/addFormEtudiant.php">    
+                    <!-- <form method="POST" action="../Controller/addFormEtudiant.php">     -->
                     <!-- <form>                     -->
                     	<div class="form-row">
                             <div class="name">Intitulé du stage</div>
@@ -94,7 +94,7 @@ require "header.php";
                         <div>
                             <center><button class="btn btn--radius-2 btn--green" id="submit" name="submit" type="submit">Submit</button></center>
                         </div>
-                    </form>
+                    <!-- </form> -->
                 </div>
             </div>
         </div>
@@ -131,8 +131,83 @@ require "header.php";
     		var fin = $("#datefin").val();
     		var entreprise = $("#entreprise").val();
     		var email = $("#email").val();
+    		console.log("Type :"+type);
+    		console.log("debut :"+debut);
+    		console.log("fin :"+fin);
+    		console.log("entreprise :"+entreprise);
+    		console.log("email :"+email);
+    		var verified = true;
+    		if(type== null)
+    		{
+    			Swal.fire({
+                        title: 'Oops',
+                        text: "Veuillez choisir l'intitulé de stage!",
+                        icon: 'error'
+                    })
+    			verified = false;
+    		}
 
-    		//ajouterForm(type,debut,fin,entreprise,email);
+    		if(debut== "")
+    		{
+    			Swal.fire({
+                        title: 'Oops',
+                        text: "Veuillez choisir la date de debut de stage!",
+                        icon: 'error'
+                    })
+    			verified = false;
+    		}
+
+    		if(fin== "")
+    		{
+    			Swal.fire({
+                        title: 'Oops',
+                        text: "Veuillez choisir la date de fin de stage!",
+                        icon: 'error'
+                    })
+    			verified = false;
+    		}
+
+
+    		if(entreprise== "")
+    		{
+    			Swal.fire({
+                        title: 'Oops',
+                        text: "Veuillez indiquer le nom de l'entreprise !",
+                        icon: 'error'
+                    })
+    			verified = false;
+    		}
+
+    		if(email== "")
+    		{
+    			Swal.fire({
+                        title: 'Oops',
+                        text: "Veuillez indiquer l'adresse email de l'entreprise !",
+                        icon: 'error'
+                    })
+    			verified = false;
+    		}
+
+    		var datedebut = new Date(debut);
+    		var datefin = new Date(fin);
+    		
+    		if(datefin<=datedebut)
+    		{
+    			Swal.fire({
+                        title: 'Oops',
+                        text: "La date de fin de stage ne peut pas etre inferieure a la date de debut",
+                        icon: 'error'
+                    });
+    			verified = false;
+    		}
+
+    		if(verified)
+    		{
+    			//ajouterForm(type,debut,fin,entreprise,email);
+    		}
+
+
+    		
 
     	});
     </script>
@@ -142,10 +217,10 @@ require "header.php";
     		$.ajax({
                 url:"../Controller/addFormEtudiant.php",
                 data:{"type":type,"datedebut":datedebut,"datefin":datefin,"entreprise":entreprise,"email":email},
-                method:"POST",
+                method:"post",
                 success: function(result)
                 {
-                	alert(result);
+                	//alert(result);
                     Swal.fire({
                         title: 'Succes',
                         text: "Ajout avec succes!",
@@ -164,7 +239,6 @@ require "header.php";
     	}
     </script>
 
-</body><!-- This templates was made by Colorlib (https://colorlib.com) -->
+</body>
 
 </html>
-<!-- end document-->
