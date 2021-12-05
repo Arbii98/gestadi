@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1:3306
--- Généré le :  jeu. 02 déc. 2021 à 14:57
+-- Généré le :  Dim 05 déc. 2021 à 00:09
 -- Version du serveur :  5.7.19
 -- Version de PHP :  5.6.31
 
@@ -39,7 +39,7 @@ CREATE TABLE IF NOT EXISTS `form_etu` (
   `user` int(11) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `fk_idetudiant` (`user`)
-) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=latin1;
 
 --
 -- Déchargement des données de la table `form_etu`
@@ -49,10 +49,22 @@ INSERT INTO `form_etu` (`id`, `type`, `date_debut`, `date_fin`, `entreprise`, `e
 (1, 1, '2021-12-10', '2021-12-24', 'SOPRA', 'arbisaidi8@gmail.com', 1),
 (6, 1, '2021-12-24', '2022-01-01', 'TEST', 'arbisaidi8@gmail.com', 1),
 (9, 2, '2021-12-25', '2021-12-04', 'Mail', 'arbisaidi8@gmail.com', 1),
-(10, 2, '2021-12-25', '2021-12-04', 'Mail', 'arbisaidi8@gmail.com', 1),
-(11, 2, '2021-12-25', '2021-12-04', 'Mail', 'arbisaidi8@gmail.com', 1),
-(12, 2, '2021-12-25', '2021-12-04', 'Mail', 'arbisaidi8@gmail.com', 1),
-(13, 1, '2021-12-24', '2022-01-01', 'Mail', 'arbisaidi8@gmail.com', 1);
+(14, 1, '2021-12-19', '2021-12-19', 'SweetAlert', 'arbisaidi8@gmail.com', 1);
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `token`
+--
+
+DROP TABLE IF EXISTS `token`;
+CREATE TABLE IF NOT EXISTS `token` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `token` varchar(50) NOT NULL,
+  `validerEtudiant` int(11) NOT NULL,
+  `validerEntreprise` int(11) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
