@@ -1,9 +1,42 @@
 <?php 
 
-require "header.php";
+    include "../DB/Config.php";
+    include "../Controller/TokenCore.php";
+    
+    if(!isset($_GET['token']))
+    {
+        echo "<script>
+        alert('Vous n\'avez pas acces a cette rubrique');
+        window.location.href='https://google.com'
+        </script>";
+    }
+    else
+    {
+        $tokenCore = new TokenCore();
+        $list = $tokenCore->getAllTokens();
+        if(!checkToken($_GET['token'],$list))
+        {
+            echo "<script>
+            alert('Token invalide');
+            window.location.href='https://google.com'
+            </script>";
+        }
+    }
+    
 
-
+    function checkToken($final,$list)
+    {
+        foreach ($list as $row) {
+            if($row->token==$final && $row->validerEtudiant==0)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
 ?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -43,54 +76,90 @@ require "header.php";
                 <div class="card-body">
                     <!-- <form method="POST" action="../Controller/addFormEtudiant.php">     -->
                     <!-- <form>                     -->
-                    	<div class="form-row">
-                            <div class="name">Intitulé du stage</div>
+                        <div class="form-row m-b-55">
+                            <div class="name">Prénom et nom de l'étudiant</div>
                             <div class="value">
-                                <div class="input-group">
-                                    <div class="rs-select2 js-select-simple select--no-search">
-                                        <select name="type" id="type" required="required">
-                                            <option disabled="disabled" selected="selected">Choose option</option>
-                                            <option value="0">Observation</option>
-                                            <option value="1">Technicien</option>
-                                            <option value="2">Ingénieur</option>
-                                        </select>
-                                        <div class="select-dropdown"></div>
+                                <div class="row row-space">
+                                    <div class="col-2">
+                                        <div class="input-group-desc">
+                                            <input class="input--style-5" type="text" name="nom" id="nom">
+                                            <label class="label--desc">Nom</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-2">
+                                        <div class="input-group-desc">
+                                            <input class="input--style-5" type="text" name="prenom" id="prenom">
+                                            <label class="label--desc">Prénom</label>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <div class="form-row">
-                            <div class="name">Date debut de stage</div>
+                            <div class="name">Identifiant de l'etudiant</div>
                             <div class="value">
                                 <div class="input-group">
-                                    <input class="input--style-5" type="date" name="datedebut" id="datedebut" required="required">
+                                    <input class="input--style-5" type="text" name="num_etudiant" id="num_etudiant" required="required">
                                 </div>
                             </div>
                         </div>
                         <div class="form-row">
-                            <div class="name">Date fin de stage</div>
+                            <div class="name">Date de naissance de l'étudiant</div>
                             <div class="value">
                                 <div class="input-group">
-                                    <input class="input--style-5" type="date" name="datefin" id="datefin" required="required">
+                                    <input class="input--style-5" type="date" name="date_naissance" id="date_naissance" required="required">
                                 </div>
                             </div>
                         </div>
                         <div class="form-row">
-                            <div class="name">Entreprise</div>
+                            <div class="name">Adresse postale de l'etudiant</div>
                             <div class="value">
                                 <div class="input-group">
-                                    <input class="input--style-5" type="text" name="entreprise" id="entreprise" required="required">
+                                    <input class="input--style-5" type="text" name="adresse" id="adresse" required="required">
                                 </div>
                             </div>
                         </div>
                         <div class="form-row">
-                            <div class="name">E-mail Entreprise</div>
+                            <div class="name">Numéro de téléphone de l'étudiant</div>
+                            <div class="value">
+                                <div class="input-group">
+                                    <input class="input--style-5" type="text" name="numero" id="numero" required="required">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="name">Adresse email de l'étudiant</div>
                             <div class="value">
                                 <div class="input-group">
                                     <input class="input--style-5" type="email" name="email" id="email" required="required">
                                 </div>
                             </div>
                         </div>
+                        <div class="form-row">
+                            <div class="name">Attestation</div>
+                            <div class="value">
+                                <div class="input-group">
+                                    <input class="input--style-5" type="file" name="attestation" id="attestation" required="required">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="name">Nom de l'entreprise</div>
+                            <div class="value">
+                                <div class="input-group">
+                                    <input class="input--style-5" type="text" name="nom_entreprise" id="nom_entreprise" required="required">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="name">Adresse email de l'entreprise</div>
+                            <div class="value">
+                                <div class="input-group">
+                                    <input class="input--style-5" type="text" name="email_entreprise" id="email_entreprise" required="required">
+                                </div>
+                            </div>
+                        </div>
+                        
                         <div>
                             <center><button class="btn btn--radius-2 btn--green" id="submit" name="submit" type="submit">Submit</button></center>
                         </div>
@@ -126,106 +195,51 @@ require "header.php";
 
     <script type="text/javascript">
     	$("#submit").click(function(){
-    		var type = $("#type").val() ;
-    		var debut = $("#datedebut").val() ;
-    		var fin = $("#datefin").val();
-    		var entreprise = $("#entreprise").val();
-    		var email = $("#email").val();
-    		console.log("Type :"+type);
-    		console.log("debut :"+debut);
-    		console.log("fin :"+fin);
-    		console.log("entreprise :"+entreprise);
-    		console.log("email :"+email);
-    		var verified = true;
-    		if(type== null)
-    		{
-    			Swal.fire({
-                        title: 'Oops',
-                        text: "Veuillez choisir l'intitulé de stage!",
-                        icon: 'error'
-                    })
-    			verified = false;
-    		}
-
-    		if(debut== "")
-    		{
-    			Swal.fire({
-                        title: 'Oops',
-                        text: "Veuillez choisir la date de debut de stage!",
-                        icon: 'error'
-                    })
-    			verified = false;
-    		}
-
-    		if(fin== "")
-    		{
-    			Swal.fire({
-                        title: 'Oops',
-                        text: "Veuillez choisir la date de fin de stage!",
-                        icon: 'error'
-                    })
-    			verified = false;
-    		}
+    		var nom = $("#nom").val() ;
+    		var prenom = $("#prenom").val() ;
+    		var num_etudiant = $("#num_etudiant").val();
+    		var date_naissance = $("#date_naissance").val();
+    		var adresse = $("#adresse").val();
+            var numero = $("#numero").val();
+            var email = $("#email").val();
+            var nom_entreprise = $("#nom_entreprise").val();
+            var email_entreprise = $("#email_entreprise").val();
+            
+            
 
 
-    		if(entreprise== "")
-    		{
-    			Swal.fire({
-                        title: 'Oops',
-                        text: "Veuillez indiquer le nom de l'entreprise !",
-                        icon: 'error'
-                    })
-    			verified = false;
-    		}
+    		console.log("nom :"+nom);
+    		console.log("prenom :"+prenom);
+    		console.log("num_etudiant :"+num_etudiant);
+    		console.log("date_naissance :"+date_naissance);
+    		console.log("adresse :"+adresse);
+            console.log("numero :"+numero);
+            console.log("email :"+email);
+            console.log("nom_entreprise :"+nom_entreprise);
+            console.log("email_entreprise :"+email_entreprise);
 
-    		if(email== "")
-    		{
-    			Swal.fire({
-                        title: 'Oops',
-                        text: "Veuillez indiquer l'adresse email de l'entreprise !",
-                        icon: 'error'
-                    })
-    			verified = false;
-    		}
-
-    		var datedebut = new Date(debut);
-    		var datefin = new Date(fin);
-    		
-    		if(datefin<=datedebut)
-    		{
-    			Swal.fire({
-                        title: 'Oops',
-                        text: "La date de fin de stage ne peut pas etre inferieure a la date de debut",
-                        icon: 'error'
-                    });
-    			verified = false;
-    		}
-
-    		if(verified)
-    		{
-    			//ajouterForm(type,debut,fin,entreprise,email);
-    		}
-
-
+            ajouterForm(nom,prenom,num_etudiant,date_naissance,adresse,numero,email,nom_entreprise,email_entreprise);
     		
 
     	});
     </script>
     <script>
-    	function ajouterForm(type,datedebut,datefin,entreprise,email)
+    	function ajouterForm(nom,prenom,num_etudiant,date_naissance,adresse,numero,email,nom_entreprise,email_entreprise)
     	{
     		$.ajax({
                 url:"../Controller/addFormEtudiant.php",
-                data:{"type":type,"datedebut":datedebut,"datefin":datefin,"entreprise":entreprise,"email":email},
-                method:"post",
+                data:{"nom":nom,"prenom":prenom,"num_etudiant":num_etudiant,"date_naissance":date_naissance,
+                    "adresse":adresse,"numero":numero,"email":email,"nom_entreprise":nom_entreprise,
+                        "email_entreprise":email_entreprise,"token":'<?=$_GET['token']?>'},
+                method:"get",
                 success: function(result)
                 {
                 	//alert(result);
                     Swal.fire({
-                        title: 'Succes',
-                        text: "Ajout avec succes!",
-                        icon: 'success'
-                    }).then((value)=>{window.location.href="FormEtudiant.php";});;
+                        title: 'Information',
+                        text: result,
+                        icon: 'info'
+                    }).then((value)=>{window.location.href="http://google.com";});;
                 },
                 error : function()
                 {

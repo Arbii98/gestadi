@@ -1,31 +1,29 @@
 <?php
 	
 	include "../DB/Config.php";
-	include "FormEtudiantCore.php";
+	include "EtudiantCore.php";
+	include "TokenCore.php";
 
-	session_start();
+	$etudiantC = new EtudiantCore();
+	$tokenC = new TokenCore();
 
-	$formEtudiant = new FormEtudiantCore();
+	if(count($etudiantC->getEtudiantByNumero($_GET['num_etudiant']))==0)
+	{
+		echo "Mauvais numero étudiant";
+	}
+	else
+	{
 
-	//if(isset($_POST['submit']))
-	//{
-		$formEtudiant->AddForm($_POST['type'],$_POST['datedebut'],$_POST['datefin'],$_POST['entreprise'],$_POST['email'],$_SESSION['id']);
+		$etudiantC->remplirEtudiantByNumero($_GET['nom'],$_GET['prenom'],
+			$_GET['date_naissance'],$_GET['adresse'],$_GET['numero'],$_GET['email'],$_GET['num_etudiant'],$_GET['nom_entreprise'],$_GET['email_entreprise']);
 
-		$header="MIME-Version: 1.0\r\n";
-	$header.='From:"IUT Laval"<no-reply@gestadi.com>'."\n";
-	$header.='Content-Type:text/html; charset="uft-8"'."\n";
-	$header.='Content-Transfer-Encoding: 8bit';
-
-	$message='
-	<html>
-		<body>
-			<center>Nous vous invitons à remplir ce formulaire de stage pour l etudiant X !</center>
-		</body>
-	</html>
-	';
-
-	//mail($_POST['email'], "Stage !", $message, $header);
+		$id_etudiant = $etudiantC->getEtudiantByNumero($_GET['num_etudiant'])[0]->id;
 		
+		$tokenC->markUsedEtudiant($_GET['token'],$id_etudiant);
+		
+		
+		echo "Votre saisie a été éffectué avec succés";
+	}
 
 	
 
