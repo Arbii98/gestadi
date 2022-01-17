@@ -319,7 +319,59 @@
                                 </div>
                             </div>
                         </div>
-
+                        
+                        <!-- 2eme maitre de stage : -->
+                        <div class="form-row m-b-55">
+                            <div class="name">Prénom et nom du deuxieme maître de stage</div>
+                            <div class="value">
+                                <div class="row row-space">
+                                    <div class="col-2">
+                                        <div class="input-group-desc">
+                                            <input class="input--style-5" type="text" name="nom_maitre2" id="nom_maitre2">
+                                            <label class="label--desc">Nom</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-2">
+                                        <div class="input-group-desc">
+                                            <input class="input--style-5" type="text" name="prenom_maitre2" id="prenom_maitre2">
+                                            <label class="label--desc">Prénom</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="name">Statut du deuxieme maître de stage</div>
+                            <div class="value">
+                                <div class="input-group">
+                                    <input class="input--style-5" type="text" name="statut_maitre2" id="statut_maitre2" required="required">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="name">Nom du poste occupé par le deuxieme maître de stage au sein de l'entreprise</div>
+                            <div class="value">
+                                <div class="input-group">
+                                    <input class="input--style-5" type="text" name="poste_maitre2" id="poste_maitre2" required="required">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="name">Numéro de téléphone du deuxieme maître de stage</div>
+                            <div class="value">
+                                <div class="input-group">
+                                    <input class="input--style-5" type="text" name="telephone_maitre2" id="telephone_maitre2" required="required">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="name">Adresse email du deuxieme maître de stage</div>
+                            <div class="value">
+                                <div class="input-group">
+                                    <input class="input--style-5" type="text" name="email_maitre2" id="email_maitre2" required="required">
+                                </div>
+                            </div>
+                        </div>
 
 
                         
