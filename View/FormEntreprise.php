@@ -210,6 +210,14 @@
                             </div>
                         </div>
                         <div class="form-row">
+                            <div class="name">Adresse du stage</div>
+                            <div class="value">
+                                <div class="input-group">
+                                    <input class="input--style-5" type="text" name="adresse_stage" id="adresse_stage" required="required">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-row">
                             <div class="name">Nombre d'heures travaillées par semaine </div>
                             <div class="value">
                                 <div class="input-group">
@@ -427,11 +435,31 @@
             var telephone_maitre = $("#telephone_maitre").val();
             var email_maitre = $("#email_maitre").val();
 
+            var nom_maitre2 = $("#nom_maitre2").val();
+            var prenom_maitre2 = $("#prenom_maitre2").val();
+            var statut_maitre2 = $("#statut_maitre2").val();
+            var poste_maitre2 = $("#poste_maitre2").val();
+            var telephone_maitre2 = $("#telephone_maitre2").val();
+            var email_maitre2 = $("#email_maitre2").val();
+            
+            var accept_covid = $("#accept_covid").val();
+            if($("#accept_covid").prop("checked")==false)
+            {
+                Swal.fire({
+                        title: 'Reglement COVID-19',
+                        text: "Veuillez accepter les reglements COVID en cochant la case adequate !",
+                        icon: 'error'
+                    });
+            }
+            else
+            {
+                ajouterForm(nom_entreprise,numero_siret,code_naf_ape,nom_dirigeant,prenom_dirigeant,email_entreprise,rue,cp,ville,
+                    nom_maitre,prenom_maitre,statut_maitre,poste_maitre,telephone_maitre,email_maitre,
+                        nom_maitre2,prenom_maitre2,statut_maitre2,poste_maitre2,telephone_maitre2,email_maitre2);
+            }
 
-
-            ajouterForm(nom_entreprise,numero_siret,code_naf_ape,nom_dirigeant,prenom_dirigeant,email_entreprise,rue,cp,ville,
-                nom_maitre,prenom_maitre,statut_maitre,poste_maitre,telephone_maitre,email_maitre);
-    		useTokenByEntreprise();
+            
+    		
 
 
     		
@@ -440,13 +468,15 @@
     </script>
     <script>
     	function ajouterForm(nom_entreprise,numero_siret,code_naf_ape,nom_dirigeant,prenom_dirigeant,email_entreprise,rue,cp,ville,
-            nom_maitre,prenom_maitre,statut_maitre,poste_maitre,telephone_maitre,email_maitre)
+            nom_maitre,prenom_maitre,statut_maitre,poste_maitre,telephone_maitre,email_maitre,
+                nom_maitre2,prenom_maitre2,statut_maitre2,poste_maitre2,telephone_maitre2,email_maitre2)
     	{
     		$.ajax({
                 url:"../Controller/addFormEntreprise.php",
                 data:{"token":'<?=$_GET['token']?>',"nom_entreprise":nom_entreprise,"numero_siret":numero_siret,"code_naf_ape":code_naf_ape,"nom_dirigeant":nom_dirigeant,
                         "prenom_dirigeant":prenom_dirigeant,"email_entreprise":email_entreprise,"rue":rue,"cp":cp,"ville":ville,
-                            "nom_maitre":nom_maitre,"prenom_maitre":prenom_maitre,"statut_maitre":statut_maitre,"poste_maitre":poste_maitre,"telephone_maitre":telephone_maitre,"email_maitre":email_maitre},
+                            "nom_maitre":nom_maitre,"prenom_maitre":prenom_maitre,"statut_maitre":statut_maitre,"poste_maitre":poste_maitre,"telephone_maitre":telephone_maitre,"email_maitre":email_maitre,
+                                "nom_maitre2":nom_maitre2,"prenom_maitre2":prenom_maitre2,"statut_maitre2":statut_maitre2,"poste_maitre2":poste_maitre2,"telephone_maitre2":telephone_maitre2,"email_maitre2":email_maitre2},
                 method:"get",
                 success: function(result)
                 {

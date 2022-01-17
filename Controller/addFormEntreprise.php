@@ -19,6 +19,13 @@
         $maitreC->addMaitre($_GET['nom_maitre'],$_GET['prenom_maitre'],$_GET['statut_maitre'],$_GET['poste_maitre'],
             $_GET['telephone_maitre'],$_GET['email_maitre'],$entreprise_id);
 
+		if($_GET['nom_maitre2']!="")
+		{
+			$maitreC->addMaitre($_GET['nom_maitre2'],$_GET['prenom_maitre2'],$_GET['statut_maitre2'],$_GET['poste_maitre2'],
+            	$_GET['telephone_maitre2'],$_GET['email_maitre2'],$entreprise_id);
+		}
+		
+
 
 		
 		$tokenC->markUsedEntreprise($_GET['token'],$entreprise_id);

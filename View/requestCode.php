@@ -37,8 +37,9 @@
 					  title: '<strong>Formulaire Etudiant</strong>',
 					  icon: 'info',
 					  html:
-					    'Un nouveau formulaire a été généré sur ce ' +
-					    '<a target="_blank" href="http://localhost/gestadi/View/FormEtudiant.php?token='+result+'">lien</a> ' ,
+					    'Un nouveau formulaire a été généré : <br><br><br>' +
+					    'Formulaire etudiant : http://localhost/gestadi/View/FormEtudiant.php?token='+result+
+					    '<br><br><br>Formulaire entreprise : http://localhost/gestadi/View/FormEntreprise.php?token='+result ,
 					  showCloseButton: true,
 					  showCancelButton: true,
 					  focusConfirm: false,
@@ -51,7 +52,8 @@
 					}).then((resultat) => {
 						  /* Read more about isConfirmed, isDenied below */
 						  if (resultat.isConfirmed) {
-                navigator.clipboard.writeText("http://localhost/gestadi/View/FormEtudiant.php?token="+result);
+                navigator.clipboard.writeText('Formulaire etudiant : http://localhost/gestadi/View/FormEtudiant.php?token='+result+
+					    '<br><br><br>Formulaire entreprise : http://localhost/gestadi/View/FormEntreprise.php?token='+result);
 						    saveToken(result);
                 Swal.fire({
                         title: 'Succes',
