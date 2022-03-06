@@ -48,6 +48,13 @@
               <span class="menu-title">Dashboard</span>
             </a>
           </li>
+
+          <li class="nav-item">
+            <a class="nav-link" href="Dashboard.php">
+              <i class="mdi mdi-chart-arc menu-icon"></i>
+              <span class="menu-title">Dashboard V2</span>
+            </a>
+          </li>
           
           <li class="nav-item">
             <a class="nav-link" href="etudiants.php">
