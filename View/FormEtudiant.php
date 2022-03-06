@@ -38,147 +38,110 @@
 
 
 <!DOCTYPE html>
-<html lang="en">
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" type="text/css" href="navbar.css" />
 
-<head>
-    <!-- Required meta tags-->
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="Colorlib Templates">
-    <meta name="author" content="Colorlib">
-    <meta name="keywords" content="Colorlib Templates">
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
+  </head>
 
-    <!-- Title Page-->
-    <title>GESTADI</title>
-
-    <!-- Icons font CSS-->
-    <link href="vendor/mdi-font/css/material-design-iconic-font.min.css" rel="stylesheet" media="all">
-    <link href="vendor/font-awesome-4.7/css/font-awesome.min.css" rel="stylesheet" media="all">
-    <!-- Font special for pages-->
-    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i" rel="stylesheet">
-
-    <!-- Vendor CSS-->
-    <link href="vendor/select2/select2.min.css" rel="stylesheet" media="all">
-    <link href="vendor/datepicker/daterangepicker.css" rel="stylesheet" media="all">
-
-    <!-- Main CSS-->
-    <link href="css/main.css" rel="stylesheet" media="all">
-
-</head>
-
-<body>
-    <div class="page-wrapper p-t-45 p-b-50" style="background-color: grey">
-        <div class="wrapper wrapper--w790">
-            <div class="card card-5">
-                <div class="card-heading">
-                    <h2 class="title">Formulaire de stage</h2>
-                </div>
-                <div class="card-body">
-                    <!-- <form method="POST" action="../Controller/addFormEtudiant.php">     -->
-                    <!-- <form>                     -->
-                        <div class="form-row m-b-55">
-                            <div class="name">Prénom et nom de l'étudiant</div>
-                            <div class="value">
-                                <div class="row row-space">
-                                    <div class="col-2">
-                                        <div class="input-group-desc">
-                                            <input class="input--style-5" type="text" name="nom" id="nom">
-                                            <label class="label--desc">Nom</label>
-                                        </div>
-                                    </div>
-                                    <div class="col-2">
-                                        <div class="input-group-desc">
-                                            <input class="input--style-5" type="text" name="prenom" id="prenom">
-                                            <label class="label--desc">Prénom</label>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-row">
-                            <div class="name">Identifiant de l'etudiant</div>
-                            <div class="value">
-                                <div class="input-group">
-                                    <input class="input--style-5" type="text" name="num_etudiant" id="num_etudiant" required="required">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-row">
-                            <div class="name">Date de naissance de l'étudiant</div>
-                            <div class="value">
-                                <div class="input-group">
-                                    <input class="input--style-5" type="date" name="date_naissance" id="date_naissance" required="required">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-row">
-                            <div class="name">Adresse postale de l'etudiant</div>
-                            <div class="value">
-                                <div class="input-group">
-                                    <input class="input--style-5" type="text" name="adresse" id="adresse" required="required">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-row">
-                            <div class="name">Numéro de téléphone de l'étudiant</div>
-                            <div class="value">
-                                <div class="input-group">
-                                    <input class="input--style-5" type="text" name="numero" id="numero" required="required">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-row">
-                            <div class="name">Adresse email de l'étudiant</div>
-                            <div class="value">
-                                <div class="input-group">
-                                    <input class="input--style-5" type="email" name="email" id="email" required="required">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-row">
-                            <div class="name">Attestation</div>
-                            <div class="value">
-                                <div class="input-group">
-                                    <input class="input--style-5" type="file" name="attestation" id="attestation" required="required">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-row">
-                            <div class="name">Nom de l'entreprise</div>
-                            <div class="value">
-                                <div class="input-group">
-                                    <input class="input--style-5" type="text" name="nom_entreprise" id="nom_entreprise" required="required">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-row">
-                            <div class="name">Adresse email de l'entreprise</div>
-                            <div class="value">
-                                <div class="input-group">
-                                    <input class="input--style-5" type="text" name="email_entreprise" id="email_entreprise" required="required">
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div>
-                            <center><button class="btn btn--radius-2 btn--green" id="submit" name="submit" type="submit">Submit</button></center>
-                        </div>
-                    <!-- </form> -->
-                </div>
-            </div>
+  <body>
+    <div>
+      <div class="nav">
+        <input type="checkbox" id="nav-check" />
+        <div class="nav-header">
+          <div style="margin-left: 30px" class="nav-title">
+            <img
+              src="https://pbs.twimg.com/profile_images/1323541845192966144/7rxqOjuP_400x400.jpg"
+              width="40px"
+              height="40px"
+            />
+          </div>
+          <strong style="color: white; font-size: 35px"> Iut Laval </strong>
         </div>
+        <div class="nav-btn">
+          <label for="nav-check">
+            <span></span>
+            <span></span>
+            <span></span>
+          </label>
+        </div>
+
+        <div class="nav-links">
+          <a href="#"> Formulaire Stage</a>
+          <a href="#About">Aide</a>
+        </div>
+      </div>
     </div>
 
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <div class="container1" id="contact">
+      <div class="row3">
+        <div class="column2">
+          <div class="card2">
+            <div class="flex">
+              <img
+                class="image"
+                src="https://pbs.twimg.com/profile_images/1323541845192966144/7rxqOjuP_400x400.jpg"
+              />
+            </div>
+          </div>
+        </div>
+        <br />
+
+        <div class="column2">
+          <!-- <form> -->
+            <label for="nom">Nom de l'étudiant</label>
+            <input class="input" type="text" name="nom" id="nom">
+            <label for="prenom">Prénom de l'étudiant</label>
+            <input class="input" type="text" name="prenom" id="prenom">
+            <label for="num_etudiant">Identifiant de l'étudiant</label>
+            <input class="input" type="text" name="num_etudiant" id="num_etudiant" required="required">
+            <label for="date_naissance">Date de naissance de l'étudiant</label>
+            <br><input class="input" type="date" name="date_naissance" id="date_naissance" required="required"><br>
+            <label for="adresse">Adresse postale de l'étudiant</label>
+            <input class="input" type="text" name="adresse" id="adresse" required="required">
+            <label for="numero">Numéro de téléphone de l'étudiant</label>
+            <input class="input" type="text" name="numero" id="numero" required="required">
+            <label for="email">Adresse e-mail de l'étudiant</label>
+            <input class="input" type="email" name="email" id="email" required="required">
+            <label for="attestation">Attestation de l'étudiant</label>
+            <input class="input" type="file" name="attestation" id="attestation" required="required">
+            <label for="nom_entreprise">Nom de l'entreprise</label>
+            <input class="input" type="text" name="nom_entreprise" id="nom_entreprise" required="required">
+            <label for="email_entreprise">Adresse email de l'entreprise</label>
+            <input class="input" type="text" name="email_entreprise" id="email_entreprise" required="required">
+            
+
+            
+            <center><button class="button" id="submit" name="submit" type="submit">Confirmer</button></center>
+            <br><br><br>
+          <!-- </form> -->
+        </div>
+      </div>
+    </div>
+  </body>
+
+
+
+
+
+
+
+
+
     <!-- Jquery JS-->
-    <script src="vendor/jquery/jquery.min.js"></script>
-    <!-- Vendor JS-->
-    <script src="vendor/select2/select2.min.js"></script>
-    <script src="vendor/datepicker/moment.min.js"></script>
-    <script src="vendor/datepicker/daterangepicker.js"></script>
-
-    <!-- Main JS-->
-    <script src="js/global.js"></script>
-
+    <script src="vendor/jquery/jquery.min.js"></script>   
+ 
     <!-- SweetAlert -->
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 

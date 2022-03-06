@@ -30,6 +30,19 @@
 			}
 		}
 
+
+		function getTokenByToken($token){
+			$sql="SELECT * from token where token='$token'";
+			$db = config::getConnexion();
+			try{
+			$liste=$db->query($sql);
+			return $liste->fetchAll(PDO::FETCH_OBJ);
+			}
+			catch (Exception $e){
+				die('Erreur: '.$e->getMessage());
+			}
+		}
+
 		function markUsedEtudiant($token,$id_etudiant)
 		{
 			$sql = "UPDATE token set validerEtudiant = 1, id_etudiant=$id_etudiant where token=:token";

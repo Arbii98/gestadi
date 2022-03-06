@@ -19,6 +19,23 @@
 		}
 
 
+		function getAllEtudiants()
+		{
+			$sql="SELECT * FROM etudiant";
+			$db = config::getConnexion();
+			try{
+                $liste=$db->query($sql);
+                return $liste->fetchAll(PDO::FETCH_OBJ);
+	            
+	           
+	        }
+	        catch (Exception $e){
+	            echo 'Erreur: '.$e->getMessage();
+	        }
+
+		}
+
+
         function remplirEtudiantByNumero($nom,$prenom,$datenaissance,$adresse,$telephone,$email,$num,$nom_entreprise,$email_entreprise)
         {
             $sql = "UPDATE etudiant SET Nom_etudiant=:nom, Prenom_etudiant=:prenom, Date_naissance_etudiant=:datenaissance, 
