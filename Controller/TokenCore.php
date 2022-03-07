@@ -2,13 +2,14 @@
 
 	class TokenCore
 	{
-		function addToken($token)
+		function addToken($token,$id)
 		{
-			$sql="insert into token values (null,:token,0,0,null,null)";
+			$sql="insert into token values (null,:token,0,0,:id,null)";
 			$db = config::getConnexion();
 			try{
 	        $req=$db->prepare($sql);
 	        $req->bindValue(':token',$token);
+			$req->bindValue(':id',$id);
 	            $req->execute();
 	           
 	        }
@@ -32,7 +33,7 @@
 
 
 		function getTokenByToken($token){
-			$sql="SELECT * from token where token='$token'";
+			$sql="SELECT t.id, t.token, t.validerEtudiant, t.validerEntreprise, t.id_etudiant, t.id_entreprise, e.Nom_etudiant, e.Prenom_etudiant, e.Num_etudiant from token t join etudiant e on t.id_etudiant = e.id where t.token='$token'";
 			$db = config::getConnexion();
 			try{
 			$liste=$db->query($sql);

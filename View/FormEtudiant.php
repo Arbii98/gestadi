@@ -35,6 +35,12 @@
         return false;
     }
 ?>
+<?php 
+$list = $tokenCore->getTokenByToken($_GET['token']);
+$nom = $list[0]->Nom_etudiant;
+$prenom = $list[0]->Prenom_etudiant;
+$num = $list[0]->Num_etudiant;
+?>
 
 
 <!DOCTYPE html>
@@ -101,11 +107,11 @@
         <div class="column2">
           <!-- <form> -->
             <label for="nom">Nom de l'étudiant</label>
-            <input class="input" type="text" name="nom" id="nom">
+            <input class="input" type="text" name="nom" id="nom" value="<?=$nom?>" readonly>
             <label for="prenom">Prénom de l'étudiant</label>
-            <input class="input" type="text" name="prenom" id="prenom">
+            <input class="input" type="text" name="prenom" id="prenom" value="<?=$prenom?>" readonly>
             <label for="num_etudiant">Identifiant de l'étudiant</label>
-            <input class="input" type="text" name="num_etudiant" id="num_etudiant" required="required">
+            <input class="input" type="text" name="num_etudiant" id="num_etudiant" required="required" value="<?=$num?>" readonly>
             <label for="date_naissance">Date de naissance de l'étudiant</label>
             <br><input class="input" type="date" name="date_naissance" id="date_naissance" required="required"><br>
             <label for="adresse">Adresse postale de l'étudiant</label>

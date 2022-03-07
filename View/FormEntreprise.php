@@ -34,7 +34,12 @@
         return false;
     }
 ?>
-
+<?php 
+$list = $tokenCore->getTokenByToken($_GET['token']);
+$nom = $list[0]->Nom_etudiant;
+$prenom = $list[0]->Prenom_etudiant;
+$num = $list[0]->Num_etudiant;
+?>
 
 
 <!DOCTYPE html>
@@ -124,7 +129,7 @@
             <label for="nom">Adresse email</label>
                 <input class="input" type="email" name="email_entreprise" id="email_entreprise" required="required">
             <label for="nom">Nom et prénom de l'étudiant stagiaire</label>
-                <input class="input" type="text" name="etudiant" id="etudiant" required="required">
+                <input class="input" type="text" name="etudiant" id="etudiant" required="required" value="<?=$nom." ".$prenom?>" readonly>
             <label for="nom">Titre du stage</label>
                 <input class="input" type="text" name="titre_stage" id="titre_stage" required="required">
             <label for="nom">Description du stage</label>

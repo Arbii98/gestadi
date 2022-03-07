@@ -4,6 +4,6 @@
 
 
 	$tokenCore = new TokenCore();
-	$tokenCore->addToken($_POST['token']);
+	$tokenCore->addToken($_POST['token'],$_POST['id']);
 
 ?>

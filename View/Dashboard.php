@@ -81,6 +81,7 @@
                     <th class="px-4 py-3">Formulaire Entreprise</th>
                     <th class="px-4 py-3">Date Debut</th>
                     <th class="px-4 py-3">Date Fin</th>
+                    <th class="px-4 py-3">Actions</th>
                   </tr>
                 </thead>
                 <tbody class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">
@@ -134,6 +135,10 @@
                     </td>
                     <td class="px-4 py-3 text-sm">
                       6/04/2021
+                    </td>
+                    <td class="px-4 py-3 text-sm">
+                      <button class="btn btn-success" style="width : 100%" data-title="edit" data-toggle="modal" data-target="#myModal">Voir details</button>
+                      <button class="btn btn-dark getcode" style="width : 100%" id="1" >Générer formulaire</button>
                     </td>
                   </tr>
 
@@ -213,4 +218,175 @@
 
 </div>
 </main>
+
+
+
+<div class="modal" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                  <div class="modal-header">
+                  		SAIDI Mohamed
+                    	<button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="text-danger fa fa-times"></i></button>
+                   		<h4 class="modal-title" id="myModalLabel"></h4>
+                  </div>
+
+                  <div class="modal-body">
+                    <center><h1>SAIDI Mohamed</h1></center>
+                    <div class="container table-responsive py-5" style="width:100%"> 
+                          <table class="table table-bordered table-hover" style="width:100%">
+                              <thead class="thead-dark">
+                              <tr>
+                                  <th>E-mail</th>
+                                  <th>Telephone</th>
+                                  <th>Adresse</th>
+                                  <th>Date de naissance</th>
+                              </tr>
+                              </thead>
+                              <tr>
+                                  <td>arbisaidi8@gmail.com</td>
+                                  <td>0668259886</td>
+                                  <td>16 Boulevard Charles Nicolle</td>
+                                  <td>15/10/1998</td>
+                              <tr>
+                          </table>
+                    </div>
+                    <center><h1>Stage</h1></center>
+                    <div class="container table-responsive py-5" style="width:100%"> 
+                          <table class="table table-bordered table-hover" style="width:100%">
+                              <thead class="thead-dark">
+                              <tr>
+                                  <th>Tuteur IUT</th>
+                                  <th>Titre du stage</th>
+                                  <th>Description du stage</th>
+                                  <th>Entreprise</th>
+                                  <th>Adresse Entreprise</th>
+                                  <th>Maitre de stage</th>
+                                  <th>Email Maitre de stage</th>
+                                  <th>Telephone Maitre de stage</th>
+                                  <th>Date debut</th>
+                                  <th>Date fin</th>
+                                  <th>Durée en semaines</th>
+                              </tr>
+                              </thead>
+                              <tr>
+                                  <td><button class="btn btn-dark">Affecter</button></td>
+                                  <td>Stage Développement Informatique</td>
+                                  <td>Gestion d'un projet informatique (analyse, développement, phase de test, mise en production)</td>
+                                  <td>Althea Solution</td>
+                                  <td>12 Boulevard Latouche 72000 La Fleche</td>
+                                  <td>Lionel Hardy</td>
+                                  <td>lionel.hardy@althea-solutions.fr</td>
+                                  <td>07.83.35.22.88</td>
+                                  <td>04/04/2022</td>
+                                  <td>26/06/2022</td>
+                                  <td>12 semaines</td>
+                              <tr>
+                          </table>
+                    </div>
+                    <br><br>
+                    <center>
+                        <button class="btn btn-success">Formulaire Etudiant</button>
+                        <button class="btn btn-danger">Formulaire Entreprise</button>
+                        <button class="btn btn-dark">Accord Etudiant</button>
+                      </center>
+                    <p>
+                      Formulaire Etudiant : http://localhost/gestadi/View/FormEtudiant.php?token=wdbtEsuPxr
+                    </p>
+                    <p>
+                      Formulaire Entreprise : http://localhost/gestadi/View/FormEntreprise.php?token=wdbtEsuPxr
+                    </p>
+                  </div>
+                </div>
+            </div>
+        </div>
+
+	<!-- SweetAlert -->
+  <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<link href="//cdn.jsdelivr.net/npm/@sweetalert2/theme-dark@3/dark.css" rel="stylesheet">
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@9/dist/sweetalert2.min.js"></script>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.slim.js"></script>
+<!-- Jquery JS-->
+<script src="vendor/jquery/jquery.min.js"></script>
+
+<script type="text/javascript">
+    	// $(document).ready(function(){
+     //         swal("Oops!", "Vous devez remplir le formulaire avant l\'envoie !", "error");
+     //    });
+    </script>
+    <script type="text/javascript">
+    	$(".getcode").click(function(){
+        var id = $(this).attr("id");
+    		$.ajax({
+                url:"../Controller/generateCode.php",
+                data:{},
+                method:"get",
+                success: function(result)
+                {
+                	
+                    Swal.fire({
+					  title: '<strong>Formulaire Etudiant</strong>',
+					  icon: 'info',
+					  html:
+					    'Un nouveau formulaire a été généré : <br><br><br>' +
+					    'Formulaire etudiant : http://localhost/gestadi/View/FormEtudiant.php?token='+result+
+					    '<br><br><br>Formulaire entreprise : http://localhost/gestadi/View/FormEntreprise.php?token='+result ,
+					  showCloseButton: true,
+					  showCancelButton: true,
+					  focusConfirm: false,
+					  confirmButtonText:
+					    'Enregistrer',
+					  confirmButtonAriaLabel: 'Thumbs up, great!',
+					  cancelButtonText:
+					    'Annuler',
+					  cancelButtonAriaLabel: 'Thumbs down'
+					}).then((resultat) => {
+						  /* Read more about isConfirmed, isDenied below */
+						  if (resultat.isConfirmed) {
+                navigator.clipboard.writeText('Formulaire etudiant : http://localhost/gestadi/View/FormEtudiant.php?token='+result+
+					    '<br><br><br>Formulaire entreprise : http://localhost/gestadi/View/FormEntreprise.php?token='+result);
+						    saveToken(result,id);
+                Swal.fire({
+                        title: 'Succes',
+                        text: "Le lien a été copié sur votre clipboard",
+                        icon: 'success'
+                    })
+						  } 
+						});
+
+                },
+                error : function()
+                {
+                    Swal.fire({
+                        title: 'Erreur',
+                        text: "Erreur lors de la generation du code !",
+                        icon: 'error'
+                    });
+                },
+            });
+    	});
+    </script>
+    <script>
+    	function saveToken(token,id)
+    	{
+    		$.ajax({
+                url:"../Controller/saveToken.php",
+                data:{"token":token,"id":id},
+                method:"post",
+                success: function(result)
+                {
+                	//alert("done");
+                },
+                error : function()
+                {
+                    Swal.fire({
+                        title: 'Erreur',
+                        text: "Formulaire n'est pas enregistré",
+                        icon: 'error'
+                    })
+                },
+            });
+    	}
+    </script>
 <?php require "footer_dashboard.php"; ?>
