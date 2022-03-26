@@ -29,11 +29,11 @@
           <li class="nav-item nav-profile border-bottom">
             <a href="#" class="nav-link flex-column">
               <div class="nav-profile-image">
-                <img src="assets/images/faces/face1.jpg" alt="profile" />
+                <img src="https://pbs.twimg.com/profile_images/1323541845192966144/7rxqOjuP_400x400.jpg" alt="profile" />
                 <!--change to offline or busy as needed-->
               </div>
               <div class="nav-profile-text d-flex ml-0 mb-3 flex-column">
-                <span class="font-weight-semibold mb-1 mt-2 text-center">Mohamed SAIDI</span>
+                <span class="font-weight-semibold mb-1 mt-2 text-center">IUT Laval</span>
                 <!-- <span class="text-secondary icon-sm text-center">$3499.00</span> -->
               </div>
             </a>
