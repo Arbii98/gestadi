@@ -1,14 +1,13 @@
 -- phpMyAdmin SQL Dump
--- version 4.7.4
+-- version 5.1.1
 -- https://www.phpmyadmin.net/
 --
--- Hôte : 127.0.0.1:3306
--- Généré le :  sam. 26 mars 2022 à 20:11
--- Version du serveur :  5.7.19
--- Version de PHP :  5.6.31
+-- Hôte : 127.0.0.1
+-- Généré le : dim. 27 mars 2022 à 20:17
+-- Version du serveur : 10.4.22-MariaDB
+-- Version de PHP : 8.0.13
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET AUTOCOMMIT = 0;
 START TRANSACTION;
 SET time_zone = "+00:00";
 
@@ -19,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Base de données :  `projet4a`
+-- Base de données : `projet4a`
 --
 
 -- --------------------------------------------------------
@@ -28,14 +27,12 @@ SET time_zone = "+00:00";
 -- Structure de la table `administrateur`
 --
 
-DROP TABLE IF EXISTS `administrateur`;
-CREATE TABLE IF NOT EXISTS `administrateur` (
-  `Identifiant_admin` int(6) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `administrateur` (
+  `Identifiant_admin` int(6) NOT NULL,
   `Nom_admin` varchar(100) NOT NULL,
   `Email_admin` varchar(150) NOT NULL,
   `Mdp_admin` varchar(150) NOT NULL,
-  `Prénom_admin` varchar(100) NOT NULL,
-  PRIMARY KEY (`Identifiant_admin`)
+  `Prénom_admin` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -44,18 +41,14 @@ CREATE TABLE IF NOT EXISTS `administrateur` (
 -- Structure de la table `convention`
 --
 
-DROP TABLE IF EXISTS `convention`;
-CREATE TABLE IF NOT EXISTS `convention` (
-  `Identifiant_conv` int(6) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `convention` (
+  `Identifiant_conv` int(6) NOT NULL,
   `Nom_entreprise_signataire_conv` varchar(155) NOT NULL,
   `Prénom_entreprise_signataire_conv` varchar(50) DEFAULT NULL,
   `Adresse_envoi_conv` varchar(255) DEFAULT NULL,
   `Identifiant_entreprise` int(6) NOT NULL,
-  `Identifiant_stage` int(6) NOT NULL,
-  PRIMARY KEY (`Identifiant_conv`),
-  KEY `fk_id_entreprise_conv` (`Identifiant_entreprise`),
-  KEY `fk_id_stage_conv` (`Identifiant_stage`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4;
+  `Identifiant_stage` int(6) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Déchargement des données de la table `convention`
@@ -73,9 +66,8 @@ INSERT INTO `convention` (`Identifiant_conv`, `Nom_entreprise_signataire_conv`, 
 -- Structure de la table `entreprise`
 --
 
-DROP TABLE IF EXISTS `entreprise`;
-CREATE TABLE IF NOT EXISTS `entreprise` (
-  `Identifiant_entreprise` int(6) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `entreprise` (
+  `Identifiant_entreprise` int(6) NOT NULL,
   `Nom_entreprise` varchar(150) NOT NULL,
   `SIRET_entreprise` varchar(150) NOT NULL,
   `NAF_APE_entreprise` varchar(150) DEFAULT NULL,
@@ -84,9 +76,8 @@ CREATE TABLE IF NOT EXISTS `entreprise` (
   `Email_entreprise` varchar(150) NOT NULL,
   `rue` varchar(30) NOT NULL,
   `cp` varchar(30) NOT NULL,
-  `ville` varchar(30) NOT NULL,
-  PRIMARY KEY (`Identifiant_entreprise`)
-) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=utf8mb4;
+  `ville` varchar(30) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Déchargement des données de la table `entreprise`
@@ -104,9 +95,8 @@ INSERT INTO `entreprise` (`Identifiant_entreprise`, `Nom_entreprise`, `SIRET_ent
 -- Structure de la table `etudiant`
 --
 
-DROP TABLE IF EXISTS `etudiant`;
-CREATE TABLE IF NOT EXISTS `etudiant` (
-  `id` int(6) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `etudiant` (
+  `id` int(6) NOT NULL,
   `Num_etudiant` varchar(100) NOT NULL,
   `Nom_etudiant` varchar(100) NOT NULL,
   `Prenom_etudiant` varchar(100) NOT NULL,
@@ -117,17 +107,18 @@ CREATE TABLE IF NOT EXISTS `etudiant` (
   `Attestation_url` varchar(500) DEFAULT NULL,
   `nom_entreprise` varchar(30) DEFAULT NULL,
   `email_entreprise` varchar(30) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4;
+  `STAGE_TROUVÉ` enum('0','1') NOT NULL DEFAULT '0',
+  `ACCORD_ETUDIANT` enum('0','1') NOT NULL DEFAULT '0'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Déchargement des données de la table `etudiant`
 --
 
-INSERT INTO `etudiant` (`id`, `Num_etudiant`, `Nom_etudiant`, `Prenom_etudiant`, `Date_naissance_etudiant`, `Adresse_etudiant`, `Tel_etudiant`, `Email_etudiant`, `Attestation_url`, `nom_entreprise`, `email_entreprise`) VALUES
-(1, 'e2105465', 'Saidi', 'Mohamed', '1998-10-15', '16 boulevard Charles Nicolle', '0668259886', 'arbisaidi8@gmail.com', NULL, 'Test', 'Test@gmail.com'),
-(2, '1234', 'Saidi', 'Arbi', '2022-03-09', '16 boulevard Charles Nicolle', '0668259886', 'arbisaidi8@gmail.com', NULL, 'Arbi Saidi', 'arbisaidi8@gmail.com'),
-(3, 'e2105465', 'Doe', 'John', NULL, NULL, NULL, NULL, NULL, 'Test', 'Test@gmail.com');
+INSERT INTO `etudiant` (`id`, `Num_etudiant`, `Nom_etudiant`, `Prenom_etudiant`, `Date_naissance_etudiant`, `Adresse_etudiant`, `Tel_etudiant`, `Email_etudiant`, `Attestation_url`, `nom_entreprise`, `email_entreprise`, `STAGE_TROUVÉ`, `ACCORD_ETUDIANT`) VALUES
+(1, 'e2105465', 'Saidi', 'Mohamed', '1998-10-15', '16 boulevard Charles Nicolle', '0668259886', 'arbisaidi8@gmail.com', NULL, 'Test', 'Test@gmail.com', '1', '1'),
+(2, '1234', 'Saidi', 'Arbi', '2022-03-09', '16 boulevard Charles Nicolle', '0668259886', 'arbisaidi8@gmail.com', NULL, 'Arbi Saidi', 'arbisaidi8@gmail.com', '0', '0'),
+(3, 'e2105465', 'Doe', 'John', NULL, NULL, NULL, NULL, NULL, 'Test', 'Test@gmail.com', '0', '1');
 
 -- --------------------------------------------------------
 
@@ -135,27 +126,24 @@ INSERT INTO `etudiant` (`id`, `Num_etudiant`, `Nom_etudiant`, `Prenom_etudiant`,
 -- Structure de la table `maitre_de_stage`
 --
 
-DROP TABLE IF EXISTS `maitre_de_stage`;
-CREATE TABLE IF NOT EXISTS `maitre_de_stage` (
-  `Identifiant_super` int(6) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `maitre_de_stage` (
+  `Identifiant_super` int(6) NOT NULL,
   `Nom_super` varchar(100) NOT NULL,
   `Prenom_super` varchar(100) NOT NULL,
   `Statut_super` varchar(100) NOT NULL,
   `Poste_occupe` varchar(100) NOT NULL,
   `Tel_super` varchar(20) NOT NULL,
   `Email_super` varchar(150) NOT NULL,
-  `Identifiant_entreprise` int(6) NOT NULL,
-  PRIMARY KEY (`Identifiant_super`),
-  KEY `fk_id_entreprise_maitre` (`Identifiant_entreprise`)
-) ENGINE=InnoDB AUTO_INCREMENT=38 DEFAULT CHARSET=utf8mb4;
+  `Identifiant_entreprise` int(6) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Déchargement des données de la table `maitre_de_stage`
 --
 
 INSERT INTO `maitre_de_stage` (`Identifiant_super`, `Nom_super`, `Prenom_super`, `Statut_super`, `Poste_occupe`, `Tel_super`, `Email_super`, `Identifiant_entreprise`) VALUES
-(30, 'Maitre1', 'Maitre1', 'Maitre1', 'Maitre1', 'Maitre1', 'Maitre1', 24),
-(31, 'Maitre2', 'Maitre2', 'Maitre2', 'Maitre2', 'Maitre2', 'Maitre2', 24),
+(30, 'Maitre1', 'Maitre1', 'Maitre1', 'Maitre1', 'Maitre1', 'Maitre1@gfgf', 24),
+(31, 'Maitre2', 'Maitre2', 'Maitre2', 'Maitre2', 'Maitre2', 'Maitre2@dgdg', 24),
 (32, 'ENT', 'ENT', 'ENT', 'ENT', 'ENT', 'ENT', 25),
 (33, 'ENT', 'ENT', 'ENT', 'ENT', 'ENT', 'ENT', 25),
 (34, 'ENT', 'ENT', 'ENT', 'ENT', 'ENT', 'ENT', 26),
@@ -169,9 +157,8 @@ INSERT INTO `maitre_de_stage` (`Identifiant_super`, `Nom_super`, `Prenom_super`,
 -- Structure de la table `stage`
 --
 
-DROP TABLE IF EXISTS `stage`;
-CREATE TABLE IF NOT EXISTS `stage` (
-  `Identifiant_stage` int(6) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `stage` (
+  `Identifiant_stage` int(6) NOT NULL,
   `Titre_stage` varchar(255) NOT NULL,
   `Description_stage` varchar(1000) NOT NULL,
   `Date_debut_stage` date NOT NULL,
@@ -184,20 +171,16 @@ CREATE TABLE IF NOT EXISTS `stage` (
   `Avantage_stage` varchar(100) DEFAULT NULL,
   `id_etudiant` int(6) NOT NULL,
   `Identifiant_entreprise` int(6) NOT NULL,
-  `Identifiant_tuteur` int(6) DEFAULT NULL,
-  PRIMARY KEY (`Identifiant_stage`),
-  KEY `fk_id_etudiant` (`id_etudiant`),
-  KEY `fk_id_entreprise` (`Identifiant_entreprise`),
-  KEY `fk_id_tuteur` (`Identifiant_tuteur`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4;
+  `Identifiant_tuteur` int(6) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Déchargement des données de la table `stage`
 --
 
 INSERT INTO `stage` (`Identifiant_stage`, `Titre_stage`, `Description_stage`, `Date_debut_stage`, `Date_fin_stage`, `Nb_heures_semaine_stage`, `Covid_19_engagement_stage`, `Adresse_stage`, `IDE_stage`, `Gratification_stage`, `Avantage_stage`, `id_etudiant`, `Identifiant_entreprise`, `Identifiant_tuteur`) VALUES
-(8, 'Stage dev', 'DevOps', '2022-02-25', '2022-03-12', '35', 1, '2 Impass Canal, rue MB, Bardo', 'IDE2', '1000', 'Transport', 1, 24, 1),
-(9, 'Stage Reseaux', 'ENT', '2022-03-08', '2022-03-25', '22', 1, 'ENT', 'ENT', '3', 'ENT', 2, 27, NULL);
+(8, 'Stage dev', 'Vide, quantum, inquam, fallare, Torquate. oratio me istius philosophi non offendit; nam et complectitur verbis, quod vult, et dicit plane, quod intellegam; et tamen ego a philosopho, si afferat eloquentiam, non asperner, si non habeat, non admodum flagitem. re mihi non aeque satisfacit, et quidem locis pluribus. sed quot homines, tot sententiae; falli igitur possumus.', '2022-02-25', '2022-03-12', '35', 1, '2 Impass Canal, rue MB, Bardo', 'IDE2', '1000', 'Transport', 1, 24, 1),
+(9, 'Stage Reseaux', 'Vide, quantum, inquam, fallare, Torquate. oratio me istius philosophi non offendit; nam et complectitur verbis, quod vult, et dicit plane, quod intellegam; et tamen ego a philosopho, si afferat eloquentiam, non asperner, si non habeat, non admodum flagitem. re mihi non aeque satisfacit, et quidem locis pluribus. sed quot homines, tot sententiae; falli igitur possumus.', '2022-03-08', '2022-03-25', '22', 1, 'ENT', 'ENT', '3', 'ENT', 3, 27, NULL);
 
 -- --------------------------------------------------------
 
@@ -205,18 +188,14 @@ INSERT INTO `stage` (`Identifiant_stage`, `Titre_stage`, `Description_stage`, `D
 -- Structure de la table `token`
 --
 
-DROP TABLE IF EXISTS `token`;
-CREATE TABLE IF NOT EXISTS `token` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `token` (
+  `id` int(11) NOT NULL,
   `token` varchar(50) NOT NULL,
   `validerEtudiant` int(11) NOT NULL,
   `validerEntreprise` int(11) NOT NULL,
   `id_etudiant` int(11) DEFAULT NULL,
-  `id_entreprise` int(11) DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `fk_id_etudiant_token` (`id_etudiant`),
-  KEY `fk_id_entreprise_token` (`id_entreprise`)
-) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=latin1;
+  `id_entreprise` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Déchargement des données de la table `token`
@@ -227,7 +206,8 @@ INSERT INTO `token` (`id`, `token`, `validerEtudiant`, `validerEntreprise`, `id_
 (19, 'wdbtEsuPxr', 0, 1, 2, 27),
 (20, 'CbMyglXa8z', 0, 0, 1, NULL),
 (21, 'ySrhQucJP0', 0, 0, 1, NULL),
-(22, 'Q4RjAxiDst', 0, 0, 3, NULL);
+(22, 'Q4RjAxiDst', 0, 0, 3, NULL),
+(23, 'NkYeDKVug0', 0, 0, 1, NULL);
 
 -- --------------------------------------------------------
 
@@ -235,21 +215,133 @@ INSERT INTO `token` (`id`, `token`, `validerEtudiant`, `validerEntreprise`, `id_
 -- Structure de la table `tuteur`
 --
 
-DROP TABLE IF EXISTS `tuteur`;
-CREATE TABLE IF NOT EXISTS `tuteur` (
-  `Identifiant_tuteur` int(6) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `tuteur` (
+  `Identifiant_tuteur` int(6) NOT NULL,
   `Nom_tuteur` varchar(100) NOT NULL,
   `Prenom_tuteur` varchar(100) NOT NULL,
-  `Email_tuteur` varchar(100) NOT NULL,
-  PRIMARY KEY (`Identifiant_tuteur`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4;
+  `Email_tuteur` varchar(100) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Déchargement des données de la table `tuteur`
 --
 
 INSERT INTO `tuteur` (`Identifiant_tuteur`, `Nom_tuteur`, `Prenom_tuteur`, `Email_tuteur`) VALUES
-(1, 'Hamon', 'Ludovic', 'EMAIL');
+(1, 'Hamon', 'Ludovic', 'EMAIL'),
+(2, 'Hamon2', 'Ludovic', 'EMAIL'),
+(3, 'Hamon 3', 'Ludovic', 'EMAIL');
+
+--
+-- Index pour les tables déchargées
+--
+
+--
+-- Index pour la table `administrateur`
+--
+ALTER TABLE `administrateur`
+  ADD PRIMARY KEY (`Identifiant_admin`);
+
+--
+-- Index pour la table `convention`
+--
+ALTER TABLE `convention`
+  ADD PRIMARY KEY (`Identifiant_conv`),
+  ADD KEY `fk_id_entreprise_conv` (`Identifiant_entreprise`),
+  ADD KEY `fk_id_stage_conv` (`Identifiant_stage`);
+
+--
+-- Index pour la table `entreprise`
+--
+ALTER TABLE `entreprise`
+  ADD PRIMARY KEY (`Identifiant_entreprise`);
+
+--
+-- Index pour la table `etudiant`
+--
+ALTER TABLE `etudiant`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Index pour la table `maitre_de_stage`
+--
+ALTER TABLE `maitre_de_stage`
+  ADD PRIMARY KEY (`Identifiant_super`),
+  ADD KEY `fk_id_entreprise_maitre` (`Identifiant_entreprise`);
+
+--
+-- Index pour la table `stage`
+--
+ALTER TABLE `stage`
+  ADD PRIMARY KEY (`Identifiant_stage`),
+  ADD KEY `fk_id_etudiant` (`id_etudiant`),
+  ADD KEY `fk_id_entreprise` (`Identifiant_entreprise`),
+  ADD KEY `fk_id_tuteur` (`Identifiant_tuteur`);
+
+--
+-- Index pour la table `token`
+--
+ALTER TABLE `token`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `fk_id_etudiant_token` (`id_etudiant`),
+  ADD KEY `fk_id_entreprise_token` (`id_entreprise`);
+
+--
+-- Index pour la table `tuteur`
+--
+ALTER TABLE `tuteur`
+  ADD PRIMARY KEY (`Identifiant_tuteur`);
+
+--
+-- AUTO_INCREMENT pour les tables déchargées
+--
+
+--
+-- AUTO_INCREMENT pour la table `administrateur`
+--
+ALTER TABLE `administrateur`
+  MODIFY `Identifiant_admin` int(6) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT pour la table `convention`
+--
+ALTER TABLE `convention`
+  MODIFY `Identifiant_conv` int(6) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
+--
+-- AUTO_INCREMENT pour la table `entreprise`
+--
+ALTER TABLE `entreprise`
+  MODIFY `Identifiant_entreprise` int(6) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
+
+--
+-- AUTO_INCREMENT pour la table `etudiant`
+--
+ALTER TABLE `etudiant`
+  MODIFY `id` int(6) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+
+--
+-- AUTO_INCREMENT pour la table `maitre_de_stage`
+--
+ALTER TABLE `maitre_de_stage`
+  MODIFY `Identifiant_super` int(6) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=38;
+
+--
+-- AUTO_INCREMENT pour la table `stage`
+--
+ALTER TABLE `stage`
+  MODIFY `Identifiant_stage` int(6) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+
+--
+-- AUTO_INCREMENT pour la table `token`
+--
+ALTER TABLE `token`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
+
+--
+-- AUTO_INCREMENT pour la table `tuteur`
+--
+ALTER TABLE `tuteur`
+  MODIFY `Identifiant_tuteur` int(6) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- Contraintes pour les tables déchargées

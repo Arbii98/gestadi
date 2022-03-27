@@ -3,12 +3,17 @@
 
   include "../Controller/EtudiantCore.php";  
   include "../DB/Config.php";
-  
+
+
   $etudiantC = new EtudiantCore();
   $list = $etudiantC->getAllEtudiantsForDashboard();
   $nbEtudiants = $etudiantC->getNbrEtudiants()[0]->nbr;
   $nbStages = $etudiantC->getNbrStages()[0]->nbr;
   $nbTokens = $etudiantC->getNbrTokens()[0]->nbr;
+  $nbrFormEtudRemp=$etudiantC->getNbrFormEtudRemp()[0]->nbr;
+  $nbrFormentrepRemplis=$etudiantC->getNbrFormEntrepRemplis()[0]->nbr;
+  
+  
 
 ?>
 <script src="https://cdn.tailwindcss.com"></script>
@@ -19,7 +24,7 @@
 <main class="h-full overflow-y-auto">
   <div class="container px-6 mx-auto grid">
               <!-- Cards -->
-              <div class="grid gap-6 mb-8 md:grid-cols-2 xl:grid-cols-4">
+          <div class="grid gap-6 mb-8 md:grid-cols-2 xl:grid-cols-4">
             <!-- Card -->
             <div class="flex items-center p-4 bg-white rounded-lg shadow-xs dark:bg-gray-800">
               <div class="p-3 mr-4 text-orange-500 bg-orange-100 rounded-full dark:text-orange-100 dark:bg-orange-500">
@@ -76,6 +81,43 @@
                 </p>
               </div>
             </div>
+            <div class="flex items-center p-4 bg-white rounded-lg shadow-xs dark:bg-gray-800">
+              <div class="p-3 mr-4 text-teal-500 bg-teal-100 rounded-full dark:text-teal-100 dark:bg-teal-500">
+                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd"
+                    d="M18 5v8a2 2 0 01-2 2h-5l-5 4v-4H4a2 2 0 01-2-2V5a2 2 0 012-2h12a2 2 0 012 2zM7 8H5v2h2V8zm2 0h2v2H9V8zm6 0h-2v2h2V8z"
+                    clip-rule="evenodd"></path>
+                </svg>
+              </div>
+              <div>
+                <p class="mb-2 text-sm font-medium text-gray-600 dark:text-gray-400">
+                  formulaires étudiants remplis
+                </p>
+                <p class="text-lg font-semibold text-gray-700 dark:text-gray-200">
+                  <?=$nbrFormEtudRemp?>
+                </p>
+              </div>
+            </div>
+            <div class="flex items-center p-4 bg-white rounded-lg shadow-xs dark:bg-gray-800">
+              <div class="p-3 mr-4 text-teal-500 bg-teal-100 rounded-full dark:text-teal-100 dark:bg-teal-500">
+                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd"
+                    d="M18 5v8a2 2 0 01-2 2h-5l-5 4v-4H4a2 2 0 01-2-2V5a2 2 0 012-2h12a2 2 0 012 2zM7 8H5v2h2V8zm2 0h2v2H9V8zm6 0h-2v2h2V8z"
+                    clip-rule="evenodd"></path>
+                </svg>
+              </div>
+              <div>
+                <p class="mb-2 text-sm font-medium text-gray-600 dark:text-gray-400">
+                  formulaires Entreprise remplis
+                </p>
+                <p class="text-lg font-semibold text-gray-700 dark:text-gray-200">
+                  <?=$nbrFormentrepRemplis?>
+                </p>
+              </div>
+            </div>
+          </div>
+           <!-- Card -->
+           
           </div>
 
         <input class="form-control" style="width : 25%" placeholder="Chercher.." id="myInput"><br>
@@ -118,20 +160,83 @@
                       </div>
                     </td>
                     <td class="px-4 py-3 text-sm">
-                       <?=$row->nom_tuteur." ".$row->prenom_tuteur?> 
-                    </td>
-                    <td class="px-4 py-3 text-xs"> 
-                    <?php if($row->Identifiant_stage==null) { ?>
-                      <span
-                        class="px-2 py-1 font-semibold leading-tight text-red-700 bg-red-100 rounded-full dark:bg-red-700 dark:text-red-100">
-                        Non
-                      </span>
-                    <?php } else {?>
-                      <span
-                        class="px-2 py-1 font-semibold leading-tight text-green-700 bg-green-100 rounded-full dark:bg-green-700 dark:text-green-100">
-                        Oui
-                      </span>
+                    <?php if($row->Identifiant_stage!=null) { ?>
+
+                      <?=$row->nom_tuteur." ".$row->prenom_tuteur?>
+                      <button class="btn btn-dark" data-title="edit" data-toggle="modal" id="<?=$row->id?>"  data-target="#myModalForTut<?php echo $row->id ?>">
+                      <?php if($row->Identifiant_tuteur==null){
+                        echo "Affecter";}
+                        else{
+                    echo "changer";
+                        }  
+                      
+                      ?>
+                      </button>
+                    
+                      <!--pop up for affecter tuteur -->
+                    <div class="modal" id="myModalForTut<?php echo $row->id ?>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                     <div class="modal-dialog ">
+                       <div class="modal-content">
+                            <div class="modal-header">
+                        affecter Tuteur
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="text-danger fa fa-times"></i></button>
+                        <h4 class="modal-title" id="myModalLabel">
+
+                        </h4>
+                            </div>
+
+                          <div class="modal-body" id="user_details">
+                              <center><h1 style="font-weight: bold;font-size:25px;margin-bottom:4%">Affecter/Modifier/Supprimer Tuteur</h1></center>
+                                  
+                                <!-- Card -->
+                                <form action="../Controller/affecterTuteur.php" method="POST" onsubmit="setTimeout(function(){window.location.reload();},20);">
+                               
+                            <div class="form-group mb-4">
+                                <label for=""  style="font-weight: bold;font-size:20px;margin-bottom:2%">Choisir un Tuteur pour <?php echo $row->Nom_etudiant." ".$row->Prenom_etudiant ?>:</label> <br>
+                                  <br>
+                                <input type="hidden" id="custId" name="stageId" value="<?php echo $row->Identifiant_stage?>">
+                                <input type="radio" name="affecterTuteur" value="-1"  style="height:20px; width:20px; vertical-align: middle;padding-bottom:4%;margin-left:10%;font-size:20px;">
+                                <span style="font-size: 16px;color:red;font-weight:bold">Supprimer tuteur</span></input>
+                                  <br> 
+                                  <br>
+                                  
+                                  
+                               <?php 
+                                $listTuteurs=$etudiantC->getAllTuteurs();
+                                foreach($listTuteurs as $row3) { ?>
+                                <input type="radio" name="affecterTuteur" value="<?php echo $row3->Identifiant_tuteur ?>"  style="height:20px; width:20px; vertical-align: middle;margin-bottom:1%;margin-left:5%;font-size:20px">
+                                <span style="font-size: 20px;"><?php echo $row3->Nom_tuteur." ".$row3->Prenom_tuteur ?><span></input>
+                                  <br> 
+                                <?php } ?>
+                                
+                                
+                            </div>
+                            <div class="form-group mb-3">
+                            <center> <button class="btn btn-dark" type="submit" name="save_radio" >affecter tuteur</button><center>
+                            </div>
+                        </form>
+            
+            
+        
+                            </div>
+                        </div>
+            </div>
+        </div>
+
+
+
+
+
+
+                    
+                      <?php } else {?>
+                        <?=$row->nom_tuteur." ".$row->prenom_tuteur?>
                     <?php } ?>
+                    </td>
+                    <td class="px-4 py-3 text-sm">
+                    <i data="<?php echo ($row->id);?>" class="status_checks btn btn-success<?php echo ($row->STAGE_TROUVÉ)?'btn btn-success': 'btn btn-danger'?>">
+                    <?php echo ($row->STAGE_TROUVÉ )? 'stage trouvé' : 'non trouvé'?>
+                        </i>
                     </td>
                     <td class="px-4 py-3 text-xs">
                     <?php if($row->Tel_etudiant==null) { ?>
@@ -159,11 +264,10 @@
                       </span>
                       <?php } ?>
                     </td>
-                    <td class="px-4 py-3 text-xs">
-                      <span
-                        class="px-2 py-1 font-semibold leading-tight text-green-700 bg-green-100 rounded-full dark:bg-green-700 dark:text-green-100">
-                        Approved
-                      </span>
+                    <td class="px-4 py-3 text-sm">
+                    <i data="<?php echo ($row->id);?>" class="status_accord_checks btn btn-success<?php echo ($row->ACCORD_ETUDIANT)?'btn btn-success': 'btn btn-danger'?>">
+                    <?php echo ($row->ACCORD_ETUDIANT )? 'approved' : 'not approved'?>
+ </i>
                     </td>
                     <td class="px-4 py-3 text-sm">
                       <?=$row->Date_debut_stage?>
@@ -173,12 +277,146 @@
                     </td>
                     <td class="px-4 py-3 text-sm">
                     <div style=" display: flex; align-content: space-between;">
-                        <button class="btn btn-success" data-title="edit" data-toggle="modal" id="<?=$row->id?>"  data-target="#myModal"><span class="mdi mdi-eye"></span></button>
-                        <button class="btn btn-dark getcode"  id="<?=$row->id?>" ><span class="mdi mdi-pencil"></button>
+                        <button class="btn btn-info " data-title="edit" data-toggle="modal" id="<?=$row->id?>"  data-target="#myModal<?php echo $row->id ?>"><span class="mdi mdi-eye"></span></button>
+                        <button class="btn btn-dark getcode"  id="<?=$row->id?>"  name="view_details"><span class="mdi mdi-pencil"></button>
                       </div>
                     </td>
                   </tr>
-                  <?php } ?>
+
+        <div class="modal" id="myModal<?php echo $row->id ?>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+          <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                  <div class="modal-header">
+                  		Détails
+                    	<button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="text-danger fa fa-times"></i></button>
+                   		<h4 class="modal-title" id="myModalLabel"></h4>
+                  </div>
+
+                  <div class="modal-body" id="user_details">
+                  <center><h1 style="font-weight: bold;font-size:35px;margin-bottom:2%"><?php echo $row->Nom_etudiant." ".$row->Prenom_etudiant ?></h1></center>
+                    <div class=" grid  md:grid-cols-2 xl:grid-cols-4" style="">
+            <!-- Card -->
+            
+            <div class="  p-8 bg-white rounded-lg shadow-xs dark:bg-gray-800" style="margin-left:50%;width:120%;">
+              
+              <div >
+                <center style="margin-bottom:10px;font-weight: bold;color:#dc3545"> Profil</center>
+                    <h3 style="margin-bottom:10px;font-weight: bold">Date de naissance : <span style="font-weight: normal" ><?php echo $row->Date_naissance_etudiant ?></span></h3>
+                    <h3 style="margin-bottom:10px;font-weight: bold">Telephone: <span style="font-weight: normal"><?php echo $row->Tel_etudiant ?></span></h3>
+                    <h3 style="margin-bottom:10px;font-weight: bold">E-mail : <span style="font-weight: normal"><?php echo $row->Email_etudiant ?></span></h3>
+                    
+                    <h3 style="margin-bottom:10px;font-weight: bold">Adresse : <span style="font-weight: normal"><?php echo $row->Adresse_etudiant?></span></h3>
+                    
+                
+               
+              </div>
+            </div>
+        
+
+            <div class="  p-4 bg-white rounded-lg shadow-xs dark:bg-gray-800" style="width:180%;margin-left:80%">
+              
+              <div >
+              <center style="margin-bottom:10px;font-weight: bold;color:#dc3545"> Options</center>
+              <button class="btn btn-success" style="margin-bottom:10px;margin-right:4%">Formulaire Etudiant</button>
+              <button class="btn btn-danger" style="margin-bottom:10px;margin-right:4%">Formulaire Entreprise</button>
+              <button class="btn btn-dark" style="margin-bottom:10px;margin-right:4%">Accord Etudiant</button>
+              <p style="margin-bottom:1%;margin-top:1%">
+              <span style="font-weight:bold;" >Formulaire Etudiant :</span> http://localhost/gestadi/View/FormEtudiant.php?token=wdbtEsuPxr
+                    </p>
+                    <p>
+                    <span style="font-weight: bold" > Formulaire Entreprise :</span> http://localhost/gestadi/View/FormEntreprise.php?token=wdbtEsuPxr
+                    </p>
+              </div>
+            </div>
+          </div>
+          <center><h1 style="margin-bottom:2%;margin-top:2%;font-weight: bold;font-size:25px">Stage</h1></center>
+                   
+           
+          <div class=" grid  md:grid-cols-2 xl:grid-cols-4" style="">
+            <!-- Card -->
+            
+            <div class="  p-8 bg-white rounded-lg shadow-xs dark:bg-gray-800" style="margin-left:10%;width:100%;">
+              
+              <div >
+                <center style="margin-bottom:10px;font-weight: bold;color:#dc3545"> Entreprise </center>
+                    <h5 style="margin-bottom:10px;font-weight: bold">Entreprise : <span style="font-weight: normal"><?php echo $row->Nom_entreprise?>	</span></h3>
+                  
+                    <h5 style="margin-bottom:10px;font-weight: bold">Adresse Entreprise : <span style="font-weight: normal"><?php echo $row->rue." ".$row->	cp." ".$row->ville ?>	</span></h3>
+                    <h5 style="margin-bottom:10px;font-weight: bold">SIRET Entreprise : <span style="font-weight: normal"><?php echo $row->SIRET_entreprise ?>	</span></h3>
+                   
+                    <h5 style="margin-bottom:10px;font-weight: bold"> NAF/APE entreprise : <span style="font-weight: normal"><?php echo $row->NAF_APE_entreprise ?>	</span></h3>
+                
+               
+              </div>
+            </div>
+
+            <div class="  p-8 bg-white rounded-lg shadow-xs dark:bg-gray-800" style="margin-left:18%;width:160%;">
+              
+              <div >
+                <center style="margin-bottom:10px;font-weight: bold;color:#dc3545"> info stage </center>
+                    <h5 style="margin-bottom:10px;font-weight: bold">Titre du stage : <span style="font-weight: normal" ><?php echo $row->Titre_stage ?></span></h3>
+                    <h5 style="margin-bottom:10px;font-weight: bold">Description du stage : <span style="font-weight: normal"><?php echo $row->Description_stage ?>	</span></h3>
+                    
+                    <h5 style="margin-bottom:10px;font-weight: bold">Nombre heures/semaine : <span style="font-weight: normal"><?php echo $row->Nb_heures_semaine_stage ?></span></h3>
+                    <h5 style="margin-bottom:10px;font-weight: bold">Date debut : <span style="font-weight: normal"><?php echo $row->Date_debut_stage ?></span></h3>
+                    <h5 style="margin-bottom:10px;font-weight: bold">Date fin : <span style="font-weight: normal"><?php echo $row->Date_fin_stage ?></span></h3>
+                    
+                
+               
+              </div>
+            </div>
+            <div class="  p-8 bg-white rounded-lg shadow-xs dark:bg-gray-800" style="margin-left:90%;width:110%;">
+              
+              <div >
+                <center style="margin-bottom:10px;font-weight: bold;color:#dc3545"> Maitre et Tuteur de stage </center>
+                
+               
+                
+                
+                
+                
+                
+                
+                
+                
+                <center><h2 style="margin:5%;font-weight: bold;text-decoration-line: underline">Maitres de stage </h2></center>
+                
+                <?php $listMaitres = $etudiantC->getMaitresStageOfStudient($row->Identifiant_entreprise);
+                      $nbr=1;
+                      foreach($listMaitres as $row2) { ?>
+
+  
+                      <h2 style="margin-bottom:2%; font-weight: bold;">Maitre de stage <?php echo $nbr?></h2>
+                      <div style="margin-left:4%;"> 
+                    
+                      <h5 style="margin-bottom:10px;font-weight: bold">Nom  : <span style="font-weight: normal"><?php echo $row2->Nom_super." ".$row2->Prenom_super  ?>	</span></h5>
+                      <h5 style="margin-bottom:10px;font-weight: bold">Email   :<span style="font-weight: normal">	<?php echo $row2->Email_super ?>	</span></h5>
+                      <h5 style="margin-bottom:10px;font-weight: bold">Telephone  : <span style="font-weight: normal"><?php echo $row2->Tel_super ?>	</span></h3>
+                   <br>
+                    </div>
+                         <?php $nbr++ ?>
+                      <?php } ?>
+
+                  
+                  
+                   
+                      <center><h2 style="margin:5%;font-weight: bold;text-decoration-line: underline">Tuteur de stage </h2></center>
+                    <h5 style="margin-bottom:10px;font-weight: bold">Nom  : <span style="font-weight: normal"><?php echo $row->nom_tuteur." ".$row->prenom_tuteur ?>	</span></h5>
+                    <h5 style="margin-bottom:10px;font-weight: bold">Email   :<span style="font-weight: normal"><?php echo $row->Email_tuteur ?>		</span></h5>
+                  
+                   
+                
+               
+              </div>
+            </div>
+          </div>
+                  </div>
+                </div>
+            </div>
+        </div>
+                  
+                  
+        <?php } ?>
 
                 </tbody>
               </table>
@@ -192,17 +430,17 @@
 
 
 
-<div class="modal" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div class="modal" id="myModal<?php echo $row->id ?>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-lg">
                 <div class="modal-content">
                   <div class="modal-header">
-                  		SAIDI Mohamed
+                  		Détails
                     	<button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="text-danger fa fa-times"></i></button>
                    		<h4 class="modal-title" id="myModalLabel"></h4>
                   </div>
 
-                  <div class="modal-body">
-                    <center><h1>SAIDI Mohamed</h1></center>
+                  <div class="modal-body" id="user_details">
+                    <center><h1><?php echo $row->id ?></h1></center>
                     <div class="container table-responsive py-5" style="width:100%"> 
                           <table class="table table-bordered table-hover" style="width:100%">
                               <thead class="thead-dark">
@@ -270,7 +508,7 @@
                 </div>
             </div>
         </div>
-
+       
 	<!-- SweetAlert -->
   <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
@@ -369,6 +607,50 @@
                 $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
             });
         });
+        
+        $(document).on('click','.detail',function(){
+            var user_id=$this
+        });
+    });
+</script>
+
+    <script src="//code.jquery.com/jquery-1.10.2.min.js"></script>
+    <script type="text/javascript">
+    $(document).on('click','.status_checks',function(){
+      var status = ($(this).hasClass("btn-success")) ? '0' : '1';
+      var msg = (status=='0')? 'non trouvé' : 'Trouvé';
+      if(confirm("Êtes-vous sûr de changer l'état du stage en stage --> "+ msg)){
+        var current_element = $(this);
+        url = "../Controller/stageTrouve.php";
+        $.ajax({
+          type:"POST",
+          url: url,
+          data: {id:$(current_element).attr('data'),status:status},
+          success: function(data)
+          {   
+            location.reload();
+          }
+        });
+      }      
+    });
+</script>
+<script type="text/javascript">
+    $(document).on('click','.status_accord_checks',function(){
+      var status = ($(this).hasClass("btn-success")) ? '0' : '1';
+      var msg = (status=='0')? 'non trouvé' : 'Trouvé';
+      if(confirm("Êtes-vous sûr de changer l'état du stage en stage --> "+ msg)){
+        var current_element = $(this);
+        url = "../Controller/accordEtud.php";
+        $.ajax({
+          type:"POST",
+          url: url,
+          data: {id:$(current_element).attr('data'),status:status},
+          success: function(data)
+          {   
+            location.reload();
+          }
+        });
+      }      
     });
 </script>
 
