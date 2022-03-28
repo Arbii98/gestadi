@@ -6,7 +6,7 @@
 
 
   $etudiantC = new EtudiantCore();
-  $list = $etudiantC->getAllEtudiantsForDashboard();
+  $listEtudiants = $etudiantC->getAllEtudiantsForDashboard();
   $nbEtudiants = $etudiantC->getNbrEtudiants()[0]->nbr;
   $nbStages = $etudiantC->getNbrStages()[0]->nbr;
   $nbTokens = $etudiantC->getNbrTokens()[0]->nbr;
@@ -124,15 +124,15 @@
           
         <div class="w-full overflow-hidden rounded-lg shadow-xs">
             <div class="w-full overflow-x-auto">
-              <table class="w-full whitespace-no-wrap">
+              <table id="array" class="w-full whitespace-no-wrap">
                 <thead>
                   <tr
                     class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800"  style="background-color : #E5007D; color : white">
-                    <th class="px-4 py-3">Etudiant</th>
-                    <th class="px-4 py-3">Tuteur Iut</th>
-                    <th class="px-4 py-3">Stage Trouvé</th>
-                    <th class="px-4 py-3">Formulaire Etudiant</th>
-                    <th class="px-4 py-3">Formulaire Entreprise</th>
+                    <th class="px-4 py-3" onclick="sort_etudiant()">Etudiant</th>
+                    <th class="px-4 py-3" onclick="sort_tuteur()">Tuteur Iut</th>
+                    <th class="px-4 py-3" onclick="sort_stage()">Stage Trouvé</th>
+                    <th class="px-4 py-3" onclick="sort_form_etudiant()">Formulaire Etudiant</th>
+                    <th class="px-4 py-3" onclick="sort_form_entreprise()">Formulaire Entreprise</th>
                     <th class="px-4 py-3">Accord Etudiant</th>
                     <th class="px-4 py-3">Date Debut</th>
                     <th class="px-4 py-3">Date Fin</th>
@@ -140,7 +140,7 @@
                   </tr>
                 </thead>
                 <tbody class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800" id="myTable">
-                  <?php foreach($list as $row) { ?>
+                  <?php foreach((array)$listEtudiants as $row) { ?>
                     <tr class="text-gray-700 dark:text-gray-400">
                     <td class="px-4 py-3">
                       <div class="flex items-center text-sm">
@@ -212,7 +212,7 @@
                                 
                             </div>
                             <div class="form-group mb-3">
-                            <center> <button class="btn btn-dark" type="submit" name="save_radio" >affecter tuteur</button><center>
+                            <center> <button class="btn btn-light" type="submit" name="save_radio" >affecter tuteur</button><center>
                             </div>
                         </form>
             
@@ -234,8 +234,8 @@
                     <?php } ?>
                     </td>
                     <td class="px-4 py-3 text-sm">
-                    <i data="<?php echo ($row->id);?>" class="status_checks btn btn-success<?php echo ($row->STAGE_TROUVÉ)?'btn btn-success': 'btn btn-danger'?>">
-                    <?php echo ($row->STAGE_TROUVÉ )? 'stage trouvé' : 'non trouvé'?>
+                    <i data="<?php echo ($row->id);?>" class="status_checks btn btn-success<?php echo ($row->STAGE_TROUVE)?'btn btn-success': 'btn btn-danger'?>">
+                    <?php echo ($row->STAGE_TROUVE )? 'stage trouvé' : 'non trouvé'?>
                         </i>
                     </td>
                     <td class="px-4 py-3 text-xs">
@@ -317,9 +317,6 @@
               
               <div >
               <center style="margin-bottom:10px;font-weight: bold;color:#dc3545"> Options</center>
-              <button class="btn btn-success" style="margin-bottom:10px;margin-right:4%">Formulaire Etudiant</button>
-              <button class="btn btn-danger" style="margin-bottom:10px;margin-right:4%">Formulaire Entreprise</button>
-              <button class="btn btn-dark" style="margin-bottom:10px;margin-right:4%">Accord Etudiant</button>
               <p style="margin-bottom:1%;margin-top:1%">
               <span style="font-weight:bold;" >Formulaire Etudiant :</span> http://localhost/gestadi/View/FormEtudiant.php?token=wdbtEsuPxr
                     </p>
@@ -614,6 +611,164 @@
     });
 </script>
 
+<input type="hidden" id="sort_form_etudiant" value="asc">
+<input type="hidden" id="sort_form_entreprise" value="asc">
+<input type="hidden" id="sort_etudiant" value="asc">
+<input type="hidden" id="sort_tuteur" value="asc">
+<input type="hidden" id="sort_stage" value="asc">
+<script>
+function sort_form_etudiant()
+{
+ var table=$('#array');
+ var tbody =$('#myTable');
+
+ tbody.find('tr').sort(function(a, b) 
+ {
+  if($('#sort_form_etudiant').val()=='asc') 
+  {
+   return $('td:nth-child(4)', a).text().localeCompare($('td:nth-child(4)', b).text());
+  }
+  else 
+  {
+   return $('td:nth-child(4)', b).text().localeCompare($('td:nth-child(4)', a).text());
+  }
+		
+ }).appendTo(tbody);
+	
+ var sort_order=$('#sort_form_etudiant').val();
+ if(sort_order=="asc")
+ {
+  document.getElementById("sort_form_etudiant").value="desc";
+ }
+ if(sort_order=="desc")
+ {
+  document.getElementById("sort_form_etudiant").value="asc";
+ }
+}
+
+function sort_form_entreprise()
+{
+ var table=$('#array');
+ var tbody =$('#myTable');
+
+ tbody.find('tr').sort(function(a, b) 
+ {
+  if($('#sort_form_entreprise').val()=='asc') 
+  {
+   return $('td:nth-child(5)', a).text().localeCompare($('td:nth-child(5)', b).text());
+  }
+  else 
+  {
+   return $('td:nth-child(5)', b).text().localeCompare($('td:nth-child(5)', a).text());
+  }
+		
+ }).appendTo(tbody);
+	
+ var sort_order=$('#sort_form_entreprise').val();
+ if(sort_order=="asc")
+ {
+  document.getElementById("sort_form_entreprise").value="desc";
+ }
+ if(sort_order=="desc")
+ {
+  document.getElementById("sort_form_entreprise").value="asc";
+ }
+}
+
+
+function sort_etudiant()
+{
+ var table=$('#array');
+ var tbody =$('#myTable');
+
+ tbody.find('tr').sort(function(a, b) 
+ {
+  if($('#sort_etudiant').val()=='asc') 
+  {
+   return $('td:first', a).text().localeCompare($('td:first', b).text());
+  }
+  else 
+  {
+   return $('td:first', b).text().localeCompare($('td:first', a).text());
+  }
+		
+ }).appendTo(tbody);
+	
+ var sort_order=$('#sort_etudiant').val();
+ if(sort_order=="asc")
+ {
+  document.getElementById("sort_etudiant").value="desc";
+ }
+ if(sort_order=="desc")
+ {
+  document.getElementById("sort_etudiant").value="asc";
+ }
+}
+
+
+function sort_tuteur()
+{
+ var table=$('#array');
+ var tbody =$('#myTable');
+
+ tbody.find('tr').sort(function(a, b) 
+ {
+  if($('#sort_tuteur').val()=='asc') 
+  {
+   return $('td:nth-child(2)', a).text().localeCompare($('td:nth-child(2)', b).text());
+  }
+  else 
+  {
+   return $('td:nth-child(2)', b).text().localeCompare($('td:nth-child(2)', a).text());
+  }
+		
+ }).appendTo(tbody);
+	
+ var sort_order=$('#sort_tuteur').val();
+ if(sort_order=="asc")
+ {
+  document.getElementById("sort_tuteur").value="desc";
+ }
+ if(sort_order=="desc")
+ {
+  document.getElementById("sort_tuteur").value="asc";
+ }
+}
+
+function sort_stage()
+{
+ var table=$('#array');
+ var tbody =$('#myTable');
+
+ tbody.find('tr').sort(function(a, b) 
+ {
+  if($('#sort_stage').val()=='asc') 
+  {
+   return $('td:nth-child(3)', a).text().localeCompare($('td:nth-child(3)', b).text());
+  }
+  else 
+  {
+   return $('td:nth-child(3)', b).text().localeCompare($('td:nth-child(3)', a).text());
+  }
+		
+ }).appendTo(tbody);
+	
+ var sort_order=$('#sort_stage').val();
+ if(sort_order=="asc")
+ {
+  document.getElementById("sort_stage").value="desc";
+ }
+ if(sort_order=="desc")
+ {
+  document.getElementById("sort_stage").value="asc";
+ }
+}
+
+
+
+</script>
+
+
     <script src="//code.jquery.com/jquery-1.10.2.min.js"></script>
     <script type="text/javascript">
     $(document).on('click','.status_checks',function(){
@@ -653,5 +808,8 @@
       }      
     });
 </script>
+
+
+
 
 <?php require "footer_dashboard.php"; ?>
