@@ -2,9 +2,6 @@
     "name": "gestadi/gestadi",
     "description": "gestion de stage",
     "type": "project",
-    "require": {
-        "phpoffice/phpword": "^0.18.3"
-    },
     "autoload": {
         "psr-4": {
             "Gestadi\\Gestadi\\": "src/"
@@ -15,5 +12,8 @@
             "name": "Mehdi Behira",
             "email": "mehdibehira@gmail.com"
         }
-    ]
+    ],
+    "require": {
+        "phpoffice/phpword": "^0.18.3"
+    }
 }

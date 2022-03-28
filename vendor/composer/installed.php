@@ -5,7 +5,7 @@
         'type' => 'project',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
-        'reference' => 'd904e731c6f11c83be469fc6689e346e04e9ab97',
+        'reference' => '019df6fde281be73d29635323f8ebde4f0586681',
         'name' => 'gestadi/gestadi',
         'dev' => true,
     ),
@@ -16,7 +16,7 @@
             'type' => 'project',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
-            'reference' => 'd904e731c6f11c83be469fc6689e346e04e9ab97',
+            'reference' => '019df6fde281be73d29635323f8ebde4f0586681',
             'dev_requirement' => false,
         ),
         'laminas/laminas-escaper' => array(
