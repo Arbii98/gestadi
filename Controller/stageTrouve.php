@@ -5,7 +5,7 @@
   extract($_POST);
   $etudiant_id=$db->real_escape_string($id);
   $status=$db->real_escape_string($status);
-  $sql=$db->query("update etudiant set STAGE_TROUVÉ='$status' WHERE id='$etudiant_id'");
+  $sql=$db->query("update etudiant set STAGE_TROUVE='$status' WHERE id='$etudiant_id'");
   echo 1;
 
 
