@@ -107,7 +107,7 @@ CREATE TABLE `etudiant` (
   `Attestation_url` varchar(500) DEFAULT NULL,
   `nom_entreprise` varchar(30) DEFAULT NULL,
   `email_entreprise` varchar(30) DEFAULT NULL,
-  `STAGE_TROUVÉ` enum('0','1') NOT NULL DEFAULT '0',
+  `STAGE_TROUVE` enum('0','1') NOT NULL DEFAULT '0',
   `ACCORD_ETUDIANT` enum('0','1') NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -115,7 +115,7 @@ CREATE TABLE `etudiant` (
 -- Déchargement des données de la table `etudiant`
 --
 
-INSERT INTO `etudiant` (`id`, `Num_etudiant`, `Nom_etudiant`, `Prenom_etudiant`, `Date_naissance_etudiant`, `Adresse_etudiant`, `Tel_etudiant`, `Email_etudiant`, `Attestation_url`, `nom_entreprise`, `email_entreprise`, `STAGE_TROUVÉ`, `ACCORD_ETUDIANT`) VALUES
+INSERT INTO `etudiant` (`id`, `Num_etudiant`, `Nom_etudiant`, `Prenom_etudiant`, `Date_naissance_etudiant`, `Adresse_etudiant`, `Tel_etudiant`, `Email_etudiant`, `Attestation_url`, `nom_entreprise`, `email_entreprise`, `STAGE_TROUVE`, `ACCORD_ETUDIANT`) VALUES
 (1, 'e2105465', 'Saidi', 'Mohamed', '1998-10-15', '16 boulevard Charles Nicolle', '0668259886', 'arbisaidi8@gmail.com', NULL, 'Test', 'Test@gmail.com', '1', '1'),
 (2, '1234', 'Saidi', 'Arbi', '2022-03-09', '16 boulevard Charles Nicolle', '0668259886', 'arbisaidi8@gmail.com', NULL, 'Arbi Saidi', 'arbisaidi8@gmail.com', '0', '0'),
 (3, 'e2105465', 'Doe', 'John', NULL, NULL, NULL, NULL, NULL, 'Test', 'Test@gmail.com', '0', '1');
