@@ -21,6 +21,7 @@
 
 
 
+
 <main class="h-full overflow-y-auto">
   <div class="container px-6 mx-auto grid">
               <!-- Cards -->
@@ -119,10 +120,30 @@
            <!-- Card -->
            
           </div>
-
+          <h3>Filtres Avancées :</h3>
+          <br/>
         <input class="form-control" style="width : 25%" placeholder="Chercher.." id="myInput"><br>
-          
-        <div class="w-full overflow-hidden rounded-lg shadow-xs">
+       <h3> Checher Par :</h3>
+
+<div id="filters" style="display:flex;justify-content:space-evenly; flex-wrap:wrap">
+<select class="bg-indigo-700  w-56 text-white"  name="filterForm"  id="filterForm">
+  <option value="Rempli" selected="" > FormualireEtudiant Rempli</option>
+  <option value="Non Rempli">Formualire Etudiant Pas Rempli</option>
+  <option value="Rempli"> formualire Entreprise Rempli</option>
+  <option value="Non Rempli">formualire Entreprise Pas Rempli</option>
+
+</select>
+<select class="bg-pink-700  w-56 text-white p-2">
+  <option value="approved">  Accord étudiant obtenu</option>
+  <option value="not approved">Accord étudiant Pas obtenu</option>
+  <option value="stage trouvé">  Stage trouvé</option>
+  <option value="non trouvé">Stage non trouvé</option>
+
+</select>
+</div>
+<br />
+
+        <div class=" container w-full overflow-hidden rounded-lg shadow-xs">
             <div class="w-full overflow-x-auto">
               <table id="array" class="w-full whitespace-no-wrap">
                 <thead>
@@ -789,6 +810,8 @@ function sort_stage()
       }      
     });
 </script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.9.2/umd/popper.min.js">
 <script type="text/javascript">
     $(document).on('click','.status_accord_checks',function(){
       var status = ($(this).hasClass("btn-success")) ? '0' : '1';
@@ -807,6 +830,26 @@ function sort_stage()
         });
       }      
     });
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){
+$("#filtreForm").on('change',function(){
+var value=$(this).val();
+alert(value);
+$.ajax({
+url:"fetchFilter.php",
+type:"POST",
+data:request='+value;
+beforeSend:function(){
+$(".container").html("<span>Working...</span>");
+},
+success:function(data){
+$(".container").html*(data)
+}
+});
+});
 </script>
 
 
