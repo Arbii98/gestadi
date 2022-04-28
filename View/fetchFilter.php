@@ -16,7 +16,7 @@
   
   
 
-  if(isset($_POST['request'])){
+  if($_POST['request']){
     $request=$_POST['request'];
     $query="	
     
@@ -26,7 +26,7 @@
         ,en.Identifiant_entreprise ,en.Nom_entreprise,en.Email_entreprise,en.rue,en.cp,en.ville,en.SIRET_entreprise,en.NAF_APE_entreprise
          FROM etudiant e left join stage s on s.id_etudiant = e.id left join tuteur t on t.Identifiant_tuteur =s.Identifiant_tuteur left join entreprise en on en.Identifiant_entreprise =s.Identifiant_entreprise
          
-         Where e.STAGE_TROUVE='$request';";
+         Where STAGE_TROUVE='$request';";
     
 
   
@@ -724,8 +724,7 @@ function sort_stage()
       }      
     });
 </script>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js">
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.9.2/umd/popper.min.js">
+
 <script type="text/javascript">
     $(document).on('click','.status_accord_checks',function(){
       var status = ($(this).hasClass("btn-success")) ? '0' : '1';
