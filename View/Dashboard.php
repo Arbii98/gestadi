@@ -16,14 +16,43 @@
   
 
 ?>
+
 <script src="https://cdn.tailwindcss.com"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.9.2/umd/popper.min.js">
 <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer></script>
 
-
+<script src="jquery.js"></script>
+<script>
+    $(document).ready(function()
+                     {
+        $("#filterForm").on('change',function()
+                         {
+            var keyword = $(this).val();
+            $.ajax(
+            {
+                url:'fetch.php',
+                type:'POST',
+                data:'request='+keyword,
+                
+                beforeSend:function()
+                {
+                    $("#table-container").html('Working...');
+                    
+                },
+                success:function(data)
+                {
+                    $("#table-container").html(data);
+                },
+            });
+        });
+    });
+    
+</script>
 
 
 <main class="h-full overflow-y-auto">
-  <div class="container px-6 mx-auto grid">
+  <div  class="container px-6 mx-auto grid">
               <!-- Cards -->
           <div class="grid gap-6 mb-8 md:grid-cols-2 xl:grid-cols-4">
             <!-- Card -->
@@ -126,24 +155,15 @@
        <h3> Checher Par :</h3>
 
 <div id="filters" style="display:flex;justify-content:space-evenly; flex-wrap:wrap">
-<select class="bg-indigo-700  w-56 text-white"  name="filterForm"  id="filterForm">
-  <option value="Rempli" selected="" > FormualireEtudiant Rempli</option>
-  <option value="Non Rempli">Formualire Etudiant Pas Rempli</option>
-  <option value="Rempli"> formualire Entreprise Rempli</option>
-  <option value="Non Rempli">formualire Entreprise Pas Rempli</option>
 
-</select>
-<select class="bg-pink-700  w-56 text-white p-2">
-  <option value="approved">  Accord étudiant obtenu</option>
-  <option value="not approved">Accord étudiant Pas obtenu</option>
-  <option value="stage trouvé">  Stage trouvé</option>
-  <option value="non trouvé">Stage non trouvé</option>
+<div class="bg-pink-700 mt-2  w-full text-white p-2 text-center" name="filterForm"  id="filterForm"> CLick on table titles to sort data
 
-</select>
+
+</div>
 </div>
 <br />
 
-        <div class=" container w-full overflow-hidden rounded-lg shadow-xs">
+        <div class="container w-full overflow-hidden rounded-lg shadow-xs">
             <div class="w-full overflow-x-auto">
               <table id="array" class="w-full whitespace-no-wrap">
                 <thead>
@@ -154,7 +174,7 @@
                     <th class="px-4 py-3" onclick="sort_stage()">Stage Trouvé</th>
                     <th class="px-4 py-3" onclick="sort_form_etudiant()">Formulaire Etudiant</th>
                     <th class="px-4 py-3" onclick="sort_form_entreprise()">Formulaire Entreprise</th>
-                    <th class="px-4 py-3">Accord Etudiant</th>
+                    <th class="px-4 py-3" onclick="sort_accord()">Accord Etudiant</th>
                     <th class="px-4 py-3">Date Debut</th>
                     <th class="px-4 py-3">Date Fin</th>
                     <th class="px-4 py-3">Actions</th>
@@ -637,6 +657,26 @@
 <input type="hidden" id="sort_etudiant" value="asc">
 <input type="hidden" id="sort_tuteur" value="asc">
 <input type="hidden" id="sort_stage" value="asc">
+<script type="text/javascript">
+$(document).ready(function(){
+$("#filtreForm").on('change',function(){
+var value=$(this).val();
+alert(value);
+$.ajax({
+url:"fetchFilter.php",
+type:"POST",
+data:request='+value;
+beforeSend:function(){
+$(".container").html("<span>Working...</span>");
+},
+success:function(data){
+$(".container").html*(data)
+}
+});
+});
+</script>
+
+
 <script>
 function sort_form_etudiant()
 {
@@ -784,6 +824,35 @@ function sort_stage()
   document.getElementById("sort_stage").value="asc";
  }
 }
+function sort_accord()
+{
+ var table=$('#array');
+ var tbody =$('#myTable');
+
+ tbody.find('tr').sort(function(a, b) 
+ {
+  if($('#sort_accord').val()=='asc') 
+  {
+   return $('td:nth-child(6)', a).text().localeCompare($('td:nth-child(6)', b).text());
+  }
+  else 
+  {
+   return $('td:nth-child(6)', b).text().localeCompare($('td:nth-child(6)', a).text());
+  }
+		
+ }).appendTo(tbody);
+	
+ var sort_order=$('#sort_accord').val();
+ if(sort_order=="asc")
+ {
+  document.getElementById("sort_accord").value="desc";
+ }
+ if(sort_order=="desc")
+ {
+  document.getElementById("sort_accord").value="asc";
+ }
+}
+
 
 
 
@@ -810,8 +879,7 @@ function sort_stage()
       }      
     });
 </script>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js">
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.9.2/umd/popper.min.js">
+
 <script type="text/javascript">
     $(document).on('click','.status_accord_checks',function(){
       var status = ($(this).hasClass("btn-success")) ? '0' : '1';
@@ -832,25 +900,6 @@ function sort_stage()
     });
 </script>
 
-
-<script type="text/javascript">
-$(document).ready(function(){
-$("#filtreForm").on('change',function(){
-var value=$(this).val();
-alert(value);
-$.ajax({
-url:"fetchFilter.php",
-type:"POST",
-data:request='+value;
-beforeSend:function(){
-$(".container").html("<span>Working...</span>");
-},
-success:function(data){
-$(".container").html*(data)
-}
-});
-});
-</script>
 
 
 
