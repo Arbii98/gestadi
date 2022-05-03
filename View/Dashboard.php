@@ -20,7 +20,15 @@
 <script src="https://cdn.tailwindcss.com"></script>
 
 
+<!-- SweetAlert -->
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
+<link href="//cdn.jsdelivr.net/npm/@sweetalert2/theme-dark@3/dark.css" rel="stylesheet">
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@9/dist/sweetalert2.min.js"></script>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.slim.js"></script>
+<!-- Jquery JS-->
+<script src="vendor/jquery/jquery.min.js"></script>
 <!-- jQuery library -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.9.2/umd/popper.min.js"></script>
 
@@ -30,33 +38,53 @@
 <!-- Latest compiled JavaScript -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"></script>
 
+<script src="//code.jquery.com/jquery-1.10.2.min.js"></script>
+<script src="js/jquery-1.10.2.min.js"></script>
+    <script src="js/jquery-ui.js"></script>
+
+
 <script>
+$(document).ready(function(){
 
-                     {
-        $("#filterForm").on('change',function()
-                         {
-            var keyword = $(this).val();
-            $.ajax(
-            {
-                url:'fetch.php',
-                type:'POST',
-                data:'request='+keyword,
-                
-                beforeSend:function()
-                {
-                    $("#table-container").html('Working...');
-                    
-                },
-                success:function(data)
-                {
-                    $("#table-container").html(data);
-                },
-            });
-        });
-    });
+   
+
     
-</script>
 
+   alert('hello');
+  $(".item_check").click(function(){
+   $("#loader").show();
+   var action= 'data';
+   var stageTrouve=get_filter_text('stageTrouve');
+   var stageNonTrouve=get_filter_text('stageNonTrouve');
+   var accordEtudiantApprouve=get_filter_text('accordEtudiantApprouve');
+   var accordEtudiantNonApprouve=get_filter_text('accordEtudiantNonApprouve');
+$.ajax({
+  url:'action.php',
+  method='POST',
+  data:{action:action , stageTrouve:stageTrouve,stageNonTrouve:stageNonTrouve,accordEtudiantApprouve:accordEtudiantApprouve,accordEtudiantNonApprouve:accordEtudiantNonApprouve},
+  success:function(response){
+    $("#result").html(response);
+    $("#loader").hide();
+$("#textChange").text("Filtred Informations ");
+
+  }
+})
+ })
+
+ function get_filter_text(text_id){
+   var filterData=[];
+   $('#'+text_id+':checked').each(function(){
+
+    filterData.push($(this).val());
+   });
+   return filterData;
+
+ }
+)
+
+}
+);
+</script>
 
 <main class="h-full overflow-y-auto">
   <div  class="container px-6 mx-auto grid">
@@ -168,35 +196,35 @@
 <div  style="display:flex;justify-content:space-evenly;flex-wrap:wrap;flex-direction:row">
 
 <div >
-   <label for="">
+   <label >
                             <input type="checkbox" class="form_check_input item_check" value="stageTrouve" id="stageTrouve" /> Stage Trouvé</label>
                             <br />
-                            <label for=""> 
+                            <label > 
                             <input type="checkbox" class="form_check_input item_check" value="stageNonTrouve" id="stageNonTrouve" /> Stage Non Trouvé</label>
                             <br />
-                            <label for="">
+                            <label >
                             <input type="checkbox" class="form_check_input item_check" value="accordEtudiantApprouve" id="AccordEtudiantApprouve" /> Accord Etudiant Approuvé</label>
                             <br />
-                            <label for="">
+                            <label >
                             <input type="checkbox" class="form_check_input item_check" id=" accordEtudiantNonApprouve" value=" AccordEtudiantNonApprouve" /> Accord Etudiant Non Approuvé</label>
                             <br />
-                            <label for="">
+                            <label >
                             <input type="checkbox" class="form_check_input item_check" id="listeDeTuteurs" value="listeDesTuteurs" /> Liste des tuteurs</label>
                             <br />
                             
                          
   </div>
   <div >
-  <label for="">
+  <label >
                             <input type="checkbox" /> Formulaire Entreprise Rempli</label>
                             <br />
-                            <label for="">
+                            <label >
                             <input type="checkbox" /> Formulaire Entreprise Non Rempli</label>
                             <br />
-                            <label for="">
+                            <label >
                             <input type="checkbox" /> Formulaire Etudiant Rempli</label>
                             <br />
-                            <label for="">
+                            <label >
                             <input type="checkbox" /> Formulaire Etudiant Non Rempli</label>
                             <br />
                            
@@ -285,7 +313,7 @@
                                 <form action="../Controller/affecterTuteur.php" method="POST" onsubmit="setTimeout(function(){window.location.reload();},20);">
                                
                             <div class="form-group mb-4">
-                                <label for=""  style="font-weight: bold;font-size:20px;margin-bottom:2%">Choisir un Tuteur pour <?php echo $row->Nom_etudiant." ".$row->Prenom_etudiant ?>:</label> <br>
+                                <label   style="font-weight: bold;font-size:20px;margin-bottom:2%">Choisir un Tuteur pour <?php echo $row->Nom_etudiant." ".$row->Prenom_etudiant ?>:</label> <br>
                                   <br>
                                 <input type="hidden" id="custId" name="stageId" value="<?php echo $row->Identifiant_stage?>">
                                 <input type="radio" name="affecterTuteur" value="-1"  style="height:20px; width:20px; vertical-align: middle;padding-bottom:4%;margin-left:10%;font-size:20px;">
@@ -599,60 +627,11 @@
             </div>
         </div>
        
-	<!-- SweetAlert -->
-  <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
-<link href="//cdn.jsdelivr.net/npm/@sweetalert2/theme-dark@3/dark.css" rel="stylesheet">
-<script src="//cdn.jsdelivr.net/npm/sweetalert2@9/dist/sweetalert2.min.js"></script>
-<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-<script src="https://code.jquery.com/jquery-3.6.0.slim.js"></script>
-<!-- Jquery JS-->
-<script src="vendor/jquery/jquery.min.js"></script>
-
-<script type="text/javascript">
-$(document).ready(function(){
- // alert('hello');
- $(".item_check").click(function(){
-   $("#loader").show();
-   var action= 'data';
-   var stageTrouve=get_filter_text('stagetrouve');
-   var stageNonTrouve=get_filter_text('stageNonTrouve');
-   var accordEtudiantApprouve=get_filter_text('accordEtudiantApprouve');
-   var accordEtudiantNonApprouve=get_filter_text('accordEtudiantNonApprouve');
-$.ajax({
-  url:'action.php',
-  method='POST',
-  data:{action:action , stageTrouve:stageTrouve,stageNonTrouve:stageNonTrouve,accordEtudiantApprouve:accordEtudiantApprouve,accordEtudiantNonApprouve:accordEtudiantNonApprouve},
-  success:function(response){
-    $("#result").html(response);
-    $("#loader").hide();
-$("#textChange").text("Filtred Informations ");
-
-  }
-})
- })
-
- function get_filter_text(text_id){
-   var filterData=[];
-   $('#'+text_id+':checked').each(function(){
-
-    filterData.push($(this).val());
-   });
-   return filterData;
-
- }
-)
-
-}
-
-</script>
+	
 
 
-<script type="text/javascript">
-    	// $(document).ready(function(){
-     //         swal("Oops!", "Vous devez remplir le formulaire avant l\'envoie !", "error");
-     //    });
-    </script>
+
+
     <script type="text/javascript">
     	$(".getcode").click(function(){
         var id = $(this).attr("id");
@@ -748,24 +727,7 @@ $("#textChange").text("Filtred Informations ");
 <input type="hidden" id="sort_etudiant" value="asc">
 <input type="hidden" id="sort_tuteur" value="asc">
 <input type="hidden" id="sort_stage" value="asc">
-<script type="text/javascript">
-$(document).ready(function(){
-$("#filtreForm").on('change',function(){
-var value=$(this).val();
-alert(value);
-$.ajax({
-url:"fetchFilter.php",
-type:"POST",
-data:request='+value;
-beforeSend:function(){
-$(".container").html("<span>Working...</span>");
-},
-success:function(data){
-$(".container").html*(data)
-}
-});
-});
-</script>
+
 
 
 <script>
