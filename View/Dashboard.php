@@ -18,13 +18,20 @@
 ?>
 
 <script src="https://cdn.tailwindcss.com"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js">
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.9.2/umd/popper.min.js">
-<script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer></script>
 
-<script src="jquery.js"></script>
+
+
+<!-- jQuery library -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.9.2/umd/popper.min.js"></script>
+
+<!-- Popper JS -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+<!-- Latest compiled JavaScript -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"></script>
+
 <script>
-    $(document).ready(function()
+
                      {
         $("#filterForm").on('change',function()
                          {
@@ -149,21 +156,66 @@
            <!-- Card -->
            
           </div>
-          <h3>Filtres Avancées :</h3>
+       
           <br/>
         <input class="form-control" style="width : 25%" placeholder="Chercher.." id="myInput"><br>
        <h3> Checher Par :</h3>
+<br />
+<div class="p-8 bg-white shadow-2xl" >
+<h3 class="text-center">Filtres Avancées :</h3>
+<br />
 
-<div id="filters" style="display:flex;justify-content:space-evenly; flex-wrap:wrap">
+<div  style="display:flex;justify-content:space-evenly;flex-wrap:wrap;flex-direction:row">
 
-<div class="bg-pink-700 mt-2  w-full text-white p-2 text-center" name="filterForm"  id="filterForm"> CLick on table titles to sort data
-
+<div >
+   <label for="">
+                            <input type="checkbox" class="form_check_input item_check" value="stageTrouve" id="stageTrouve" /> Stage Trouvé</label>
+                            <br />
+                            <label for=""> 
+                            <input type="checkbox" class="form_check_input item_check" value="stageNonTrouve" id="stageNonTrouve" /> Stage Non Trouvé</label>
+                            <br />
+                            <label for="">
+                            <input type="checkbox" class="form_check_input item_check" value="accordEtudiantApprouve" id="AccordEtudiantApprouve" /> Accord Etudiant Approuvé</label>
+                            <br />
+                            <label for="">
+                            <input type="checkbox" class="form_check_input item_check" id=" accordEtudiantNonApprouve" value=" AccordEtudiantNonApprouve" /> Accord Etudiant Non Approuvé</label>
+                            <br />
+                            <label for="">
+                            <input type="checkbox" class="form_check_input item_check" id="listeDeTuteurs" value="listeDesTuteurs" /> Liste des tuteurs</label>
+                            <br />
+                            
+                         
+  </div>
+  <div >
+  <label for="">
+                            <input type="checkbox" /> Formulaire Entreprise Rempli</label>
+                            <br />
+                            <label for="">
+                            <input type="checkbox" /> Formulaire Entreprise Non Rempli</label>
+                            <br />
+                            <label for="">
+                            <input type="checkbox" /> Formulaire Etudiant Rempli</label>
+                            <br />
+                            <label for="">
+                            <input type="checkbox" /> Formulaire Etudiant Non Rempli</label>
+                            <br />
+                           
+                           
+  </div>
 
 </div>
+
+
+
 </div>
 <br />
 
-        <div class="container w-full overflow-hidden rounded-lg shadow-xs">
+        <div class="container w-full overflow-hidden rounded-lg shadow-xs" id="result">
+          <div style="text-align:center;">
+<img src="https://th.bing.com/th/id/R.2351827d896995f1f6e12e89176f3d9b?rik=t258KJio4%2bo0PA&pid=ImgRaw&r=0" width="200" style="display:none;" id="loader" />
+  </div>
+  <h5 class="text-center text-pink-600 font-bold"  id="textChange"  >All Informations </h5>
+  <br />
             <div class="w-full overflow-x-auto">
               <table id="array" class="w-full whitespace-no-wrap">
                 <thead>
@@ -558,6 +610,45 @@
 <script src="vendor/jquery/jquery.min.js"></script>
 
 <script type="text/javascript">
+$(document).ready(function(){
+ // alert('hello');
+ $(".item_check").click(function(){
+   $("#loader").show();
+   var action= 'data';
+   var stageTrouve=get_filter_text('stagetrouve');
+   var stageNonTrouve=get_filter_text('stageNonTrouve');
+   var accordEtudiantApprouve=get_filter_text('accordEtudiantApprouve');
+   var accordEtudiantNonApprouve=get_filter_text('accordEtudiantNonApprouve');
+$.ajax({
+  url:'action.php',
+  method='POST',
+  data:{action:action , stageTrouve:stageTrouve,stageNonTrouve:stageNonTrouve,accordEtudiantApprouve:accordEtudiantApprouve,accordEtudiantNonApprouve:accordEtudiantNonApprouve},
+  success:function(response){
+    $("#result").html(response);
+    $("#loader").hide();
+$("#textChange").text("Filtred Informations ");
+
+  }
+})
+ })
+
+ function get_filter_text(text_id){
+   var filterData=[];
+   $('#'+text_id+':checked').each(function(){
+
+    filterData.push($(this).val());
+   });
+   return filterData;
+
+ }
+)
+
+}
+
+</script>
+
+
+<script type="text/javascript">
     	// $(document).ready(function(){
      //         swal("Oops!", "Vous devez remplir le formulaire avant l\'envoie !", "error");
      //    });
@@ -899,6 +990,7 @@ function sort_accord()
       }      
     });
 </script>
+
 
 
 
