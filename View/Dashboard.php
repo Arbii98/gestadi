@@ -21,7 +21,7 @@
 
 
 <!-- SweetAlert -->
-<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+//<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 <link href="//cdn.jsdelivr.net/npm/@sweetalert2/theme-dark@3/dark.css" rel="stylesheet">
 <script src="//cdn.jsdelivr.net/npm/sweetalert2@9/dist/sweetalert2.min.js"></script>
@@ -43,48 +43,7 @@
     <script src="js/jquery-ui.js"></script>
 
 
-<script>
-$(document).ready(function(){
 
-   
-
-    
-
-   alert('hello');
-  $(".item_check").click(function(){
-   $("#loader").show();
-   var action= 'data';
-   var stageTrouve=get_filter_text('stageTrouve');
-   var stageNonTrouve=get_filter_text('stageNonTrouve');
-   var accordEtudiantApprouve=get_filter_text('accordEtudiantApprouve');
-   var accordEtudiantNonApprouve=get_filter_text('accordEtudiantNonApprouve');
-$.ajax({
-  url:'action.php',
-  method='POST',
-  data:{action:action , stageTrouve:stageTrouve,stageNonTrouve:stageNonTrouve,accordEtudiantApprouve:accordEtudiantApprouve,accordEtudiantNonApprouve:accordEtudiantNonApprouve},
-  success:function(response){
-    $("#result").html(response);
-    $("#loader").hide();
-$("#textChange").text("Filtred Informations ");
-
-  }
-})
- })
-
- function get_filter_text(text_id){
-   var filterData=[];
-   $('#'+text_id+':checked').each(function(){
-
-    filterData.push($(this).val());
-   });
-   return filterData;
-
- }
-)
-
-}
-);
-</script>
 
 <main class="h-full overflow-y-auto">
   <div  class="container px-6 mx-auto grid">
@@ -227,7 +186,7 @@ $("#textChange").text("Filtred Informations ");
                             <label >
                             <input type="checkbox" /> Formulaire Etudiant Non Rempli</label>
                             <br />
-                           
+                           <button  onclick="myFunction()"> j </button>
                            
   </div>
 
@@ -953,8 +912,46 @@ function sort_accord()
     });
 </script>
 
+<script>
+	if ($('input[id=stageTrouve]').is(':checked')) {
+		alert("jQuery c'est super");
+	} else {
+		alert("jQuery c'est autre chose");
+	}
 
+$(document).ready(function() {
+		alert('hello');
+		$(".item_check").click(function() {
+			$("#loader").show();
+			var action : 'data';
+			var stageTrouve = get_filter_text('stageTrouve');
+			var stageNonTrouve = get_filter_text('stageNonTrouve');
+			var accordEtudiantApprouve = get_filter_text('accordEtudiantApprouve');
+			var accordEtudiantNonApprouve = get_filter_text('accordEtudiantNonApprouve');
+	$.ajax({
+			url:'action.php',
+			method:'POST',
+			data:{action:action , stageTrouve:stageTrouve,stageNonTrouve:stageNonTrouve,accordEtudiantApprouve:accordEtudiantApprouve,accordEtudiantNonApprouve:accordEtudiantNonApprouve},
+			success:function(response){
+			 $("#result").html(response);
+			 $("#loader").hide();
+			$("#textChange").text("Filtred Informations ");
 
+			}
+			})
+
+      function get_filter_text(text_id){
+   var filterData=[];
+   $('#'+text_id+':checked').each(function(){
+
+    filterData.push($(this).val());
+   });
+   return filterData;
+
+ }
+		});
+
+	}) 	</script>
 
 
 
