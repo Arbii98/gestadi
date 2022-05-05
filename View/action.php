@@ -29,32 +29,33 @@
          Where STAGE_TROUVE !='';";
          if(isset($_POST[' STAGE_TROUVE'])){
           $StageTrouve= implode("','",$_POST['STAGE_TROUVE']);
-          $sql.="AND STAGE_TROUVE IN  ()"
+          $sql.="AND STAGE_TROUVE IN  ()";
     
          }
     
          if(isset($_POST[' ACCORD_ETUDIANT'])){
           $accordEtudiant= implode("','",$_POST['ACCORD_ETUDIANT']);
-          $sql.="AND ACCORD_ETUDIANT IN  ()"
+          $sql.="AND ACCORD_ETUDIANT IN  ()";
 
     
          }
+        
          	$db = config::getConnexion();
            $output='';
            $liste=$db->query($sql);
            if($result->num_rows>0){
              while($row=$result->fetch_assoc()){
-               $output.='<h1>result ouput </h1>'
+               $output.='<h1>result ouput </h1>';
              }
-             else(
-               $output.='<h1>No result found </h1>
-             )
+           
+           else if($result->num_rows>0){
+            $output.='<h1>No result found </h1>';
            }
     
 
    
             
       
-         }
+            }
  
     ?>
