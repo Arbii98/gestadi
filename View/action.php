@@ -44,12 +44,13 @@
          	$db = config::getConnexion();
            $output='';
            $liste=$db->query($sql);
-           if($liste->num_rows>0){
-             while($row=$liste->fetch_assoc()){
+           if($liste->rowCount() > 0){
+             while($row=$liste->fetch(PDO::FETCH_ASSOC)){
                $output.='<h1>result ouput </h1>';
              }/*else ($result->num_rows>0){
             $output.='<h1>No result found </h1>';*/
            }
+          
     
 
    
