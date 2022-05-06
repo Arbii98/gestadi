@@ -2,14 +2,14 @@
 
     class ConventionCore
     {
-        function addConvention($nom,$prenom,$adresse,$id_entreprise,$id_stage)
+        function addConvention($civilite,$nom,$prenom,$adresse,$id_entreprise,$id_stage)
         {
-            $sql="INSERT INTO convention values(null,:nom,:prenom,:adresse,:id_entreprise,:id_stage);";
+            $sql="INSERT INTO convention values(null,:civilite,:nom,:prenom,:adresse,:id_entreprise,:id_stage);";
 			$db = config::getConnexion();
 			try{
 
 	        $req=$db->prepare($sql);
-	        
+	        $req->bindValue(':civilite',$civilite);
             $req->bindValue(':nom',$nom);
             $req->bindValue(':prenom',$prenom);
             $req->bindValue(':adresse',$adresse);

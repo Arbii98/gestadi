@@ -106,6 +106,11 @@ $num = $list[0]->Num_etudiant;
 
         <div class="column2">
           <!-- <form> -->
+            <label for="civilite">Civilité</label><br>
+            <select name="civilite" id="civilite" class="input" style="width :100%; height:40px;">
+              <option value="Mr">Mr</option>
+              <option value="Mme">Mme</option>
+            </select><br>
             <label for="nom">Nom de l'étudiant</label>
             <input class="input" type="text" name="nom" id="nom" value="<?=$nom?>" readonly>
             <label for="prenom">Prénom de l'étudiant</label>
@@ -164,16 +169,18 @@ $num = $list[0]->Num_etudiant;
 
     <script type="text/javascript">
     	$("#submit").click(function(){
+        var civilite = $("#civilite").val();
     		var nom = $("#nom").val() ;
     		var prenom = $("#prenom").val() ;
     		var num_etudiant = $("#num_etudiant").val();
     		var date_naissance = $("#date_naissance").val();
     		var adresse = $("#adresse").val();
-            var numero = $("#numero").val();
-            var email = $("#email").val();
-            var nom_entreprise = $("#nom_entreprise").val();
-            var email_entreprise = $("#email_entreprise").val();
-            
+        var numero = $("#numero").val();
+        var email = $("#email").val();
+        var nom_entreprise = $("#nom_entreprise").val();
+        var email_entreprise = $("#email_entreprise").val();
+        
+        console.log("Civilite : "+civilite);
             
 
 
@@ -182,22 +189,22 @@ $num = $list[0]->Num_etudiant;
     		console.log("num_etudiant :"+num_etudiant);
     		console.log("date_naissance :"+date_naissance);
     		console.log("adresse :"+adresse);
-            console.log("numero :"+numero);
-            console.log("email :"+email);
-            console.log("nom_entreprise :"+nom_entreprise);
-            console.log("email_entreprise :"+email_entreprise);
+        console.log("numero :"+numero);
+        console.log("email :"+email);
+        console.log("nom_entreprise :"+nom_entreprise);
+        console.log("email_entreprise :"+email_entreprise);
 
-            ajouterForm(nom,prenom,num_etudiant,date_naissance,adresse,numero,email,nom_entreprise,email_entreprise);
+        ajouterForm(civilite,nom,prenom,num_etudiant,date_naissance,adresse,numero,email,nom_entreprise,email_entreprise);
     		
 
     	});
     </script>
     <script>
-    	function ajouterForm(nom,prenom,num_etudiant,date_naissance,adresse,numero,email,nom_entreprise,email_entreprise)
+    	function ajouterForm(civilite,nom,prenom,num_etudiant,date_naissance,adresse,numero,email,nom_entreprise,email_entreprise)
     	{
     		$.ajax({
                 url:"../Controller/addFormEtudiant.php",
-                data:{"nom":nom,"prenom":prenom,"num_etudiant":num_etudiant,"date_naissance":date_naissance,
+                data:{"civilite":civilite,"nom":nom,"prenom":prenom,"num_etudiant":num_etudiant,"date_naissance":date_naissance,
                     "adresse":adresse,"numero":numero,"email":email,"nom_entreprise":nom_entreprise,
                         "email_entreprise":email_entreprise,"token":'<?=$_GET['token']?>'},
                 method:"get",

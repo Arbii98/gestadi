@@ -277,6 +277,7 @@
                     </td>
                     <td class="px-4 py-3 text-sm">
                     <div style=" display: flex; align-content: space-between;">
+                        <a href="../Controller/ConventionGenerator.php?id=<?=$row->id?>"><button class="btn btn-dark">Convention</button></a>
                         <button class="btn btn-info " data-title="edit" data-toggle="modal" id="<?=$row->id?>"  data-target="#myModal<?php echo $row->id ?>"><span class="mdi mdi-eye"></span></button>
                         <button class="btn btn-dark getcode"  id="<?=$row->id?>"  name="view_details"><span class="mdi mdi-pencil"></button>
                       </div>

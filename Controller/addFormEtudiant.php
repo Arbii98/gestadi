@@ -14,7 +14,7 @@
 	else
 	{
 
-		$etudiantC->remplirEtudiantByNumero($_GET['nom'],$_GET['prenom'],
+		$etudiantC->remplirEtudiantByNumero($_GET['civilite'],$_GET['nom'],$_GET['prenom'],
 			$_GET['date_naissance'],$_GET['adresse'],$_GET['numero'],$_GET['email'],$_GET['num_etudiant'],$_GET['nom_entreprise'],$_GET['email_entreprise']);
 
 		$id_etudiant = $etudiantC->getEtudiantByNumero($_GET['num_etudiant'])[0]->id;

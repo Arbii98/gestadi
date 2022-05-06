@@ -17,16 +17,15 @@
 	
 
 		$entrepriseC->addEntreprise($_GET['nom_entreprise'],$_GET['numero_siret'],
-			$_GET['code_naf_ape'],$_GET['nom_dirigeant'],$_GET['prenom_dirigeant'],$_GET['email_entreprise'],$_GET['rue'],$_GET['cp'],$_GET['ville']);
+			$_GET['code_naf_ape'],$_GET['civilite_dirigeant'],$_GET['nom_dirigeant'],$_GET['prenom_dirigeant'],$_GET['fonction_dirigeant'],$_GET['email_entreprise'],$_GET['telephone'],$_GET['rue'],$_GET['cp'],$_GET['ville']);
 
         $entreprise_id = $entrepriseC->getLastAddedEntreprise()[0]->Identifiant_entreprise;
-
-        $maitreC->addMaitre($_GET['nom_maitre'],$_GET['prenom_maitre'],$_GET['statut_maitre'],$_GET['poste_maitre'],
+        $maitreC->addMaitre($_GET["civilite_maitre1"],$_GET['nom_maitre'],$_GET['prenom_maitre'],$_GET['statut_maitre'],$_GET['poste_maitre'],
             $_GET['telephone_maitre'],$_GET['email_maitre'],$entreprise_id);
 
 		if($_GET['nom_maitre2']!="")
 		{
-			$maitreC->addMaitre($_GET['nom_maitre2'],$_GET['prenom_maitre2'],$_GET['statut_maitre2'],$_GET['poste_maitre2'],
+			$maitreC->addMaitre($_GET["civilite_maitre2"],$_GET['nom_maitre2'],$_GET['prenom_maitre2'],$_GET['statut_maitre2'],$_GET['poste_maitre2'],
             	$_GET['telephone_maitre2'],$_GET['email_maitre2'],$entreprise_id);
 		}
 		
@@ -38,7 +37,7 @@
 
 		$stage_id = $stageC->getLastAddedStage()[0]->Identifiant_stage;
 
-		$conventionC->addConvention($_GET["nom_signataire"],$_GET["prenom_signataire"],"adresse statique",$entreprise_id,$stage_id);
+		$conventionC->addConvention($_GET["civilite_signataire"],$_GET["nom_signataire"],$_GET["prenom_signataire"],"adresse statique",$entreprise_id,$stage_id);
 
 		
 		

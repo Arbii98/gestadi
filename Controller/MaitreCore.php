@@ -2,12 +2,13 @@
 
     class MaitreCore
     {
-        function addMaitre($nom_maitre,$prenom_maitre,$statut_maitre,$poste_maitre,$telephone_maitre,$email_maitre,$entreprise)
+        function addMaitre($civilite,$nom_maitre,$prenom_maitre,$statut_maitre,$poste_maitre,$telephone_maitre,$email_maitre,$entreprise)
         {
-            $sql="INSERT INTO maitre_de_stage values(null,:nom_maitre,:prenom_maitre,:statut_maitre,:poste_maitre,:telephone_maitre,:email_maitre,:entreprise);";
+            $sql="INSERT INTO maitre_de_stage values(null,:civilite,:nom_maitre,:prenom_maitre,:statut_maitre,:poste_maitre,:telephone_maitre,:email_maitre,:entreprise);";
 			$db = config::getConnexion();
 			try{
 	        $req=$db->prepare($sql);
+            $req->bindValue(':civilite',$civilite);
 	        $req->bindValue(':nom_maitre',$nom_maitre);
             $req->bindValue(':prenom_maitre',$prenom_maitre);
             $req->bindValue(':statut_maitre',$statut_maitre);

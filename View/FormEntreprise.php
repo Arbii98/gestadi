@@ -112,10 +112,22 @@ $num = $list[0]->Num_etudiant;
                 <input class="input" type="text" name="numero_siret" id="numero_siret" required="required">
             <label for="nom">Code NAF ou APE</label>
                 <input class="input" type="text" name="code_naf_ape" id="code_naf_ape" required="required">
+            <label for="civilite_dirigeant">Civilité du dirigeant</label><br>
+                <select name="civilite_dirigeant" id="civilite_dirigeant" class="input" style="width :100%; height:40px;">
+                    <option value="Mr">Mr</option>
+                    <option value="Mme">Mme</option>
+                </select><br>
             <label for="nom">Nom du dirigeant</label>
                 <input class="input" type="text" name="nom_dirigeant" id="nom_dirigeant">
             <label for="nom">Prénom du dirigeant</label>
                 <input class="input" type="text" name="prenom_dirigeant" id="prenom_dirigeant">
+            <label for="fonction_dirigeant">Fonction du dirigeant</label>
+                <input class="input" type="text" name="fonction_dirigeant" id="fonction_dirigeant">
+            <label for="civilite_signataire">Civilité du signataire</label><br>
+                <select name="civilite_signataire" id="civilite_signataire" class="input" style="width :100%; height:40px;">
+                    <option value="Mr">Mr</option>
+                    <option value="Mme">Mme</option>
+                </select><br>
             <label for="nom">Nom du signataire</label>
                 <input class="input" type="text" name="nom_signataire" id="nom_signataire">
             <label for="nom">Prénom du signataire</label>
@@ -128,6 +140,8 @@ $num = $list[0]->Num_etudiant;
                 <input class="input" type="text" name="ville" id="ville" required="required">
             <label for="nom">Adresse email</label>
                 <input class="input" type="email" name="email_entreprise" id="email_entreprise" required="required">
+            <label for="telephone_entreprise">Telephone entreprise</label>
+                <input class="input" type="text" name="telephone_entreprise" id="telephone_entreprise" required="required">
             <label for="nom">Nom et prénom de l'étudiant stagiaire</label>
                 <input class="input" type="text" name="etudiant" id="etudiant" required="required" value="<?=$nom." ".$prenom?>" readonly>
             <label for="nom">Titre du stage</label>
@@ -158,7 +172,11 @@ $num = $list[0]->Num_etudiant;
                 <input class="input" type="text" name="montant" id="montant" required="required">
             <label for="nom">Avantages offerts</label>
                 <input class="input" type="text" name="avantages" id="avantages" required="required">
-            
+            <label for="civilite_maitre1">Civilité du maître de stage</label><br>
+                <select name="civilite_maitre1" id="civilite_maitre1" class="input" style="width :100%; height:40px;">
+                    <option value="Mr">Mr</option>
+                    <option value="Mme">Mme</option>
+                </select><br>
             <label for="nom">Nom du maître de stage</label>
                 <input class="input" type="text" name="nom_maitre" id="nom_maitre">
             <label for="nom">Prénom du maître de stage</label>
@@ -171,6 +189,11 @@ $num = $list[0]->Num_etudiant;
                 <input class="input" type="text" name="telephone_maitre" id="telephone_maitre" required="required">
             <label for="nom">Adresse email du maître de stage</label>
                 <input class="input" type="text" name="email_maitre" id="email_maitre" required="required">
+            <label for="civilite_maitre2">Civilité du deuxieme maître de stage (Si existe)</label><br>
+                <select name="civilite_maitre2" id="civilite_maitre2" class="input" style="width :100%; height:40px;">
+                    <option value="Mr">Mr</option>
+                    <option value="Mme">Mme</option>
+                </select><br>
             <label for="nom">Nom du deuxieme maître de stage (Si existe)</label>
                 <input class="input" type="text" name="nom_maitre2" id="nom_maitre2">
             <label for="nom">Prénom du deuxieme maître de stage (Si existe)</label>
@@ -223,7 +246,18 @@ $num = $list[0]->Num_etudiant;
             var cp = $("#cp").val();
             var ville = $("#ville").val();
 
+            var telephone = $("#telephone_entreprise").val();
+            var civilite_dirigeant = $("#civilite_dirigeant").val();
+            var fonction_dirigeant = $("#fonction_dirigeant").val();
+
+            console.log("Telephone : "+telephone);
+            console.log("Civilite Dirigeant : "+civilite_dirigeant)
+            console.log("Fonction Dirigeant : "+fonction_dirigeant)
+
             //Maitre 1 
+            var civilite_maitre1 = $("#civilite_maitre1").val();
+            console.log("Civilite Maitre :"+civilite_maitre1);
+
             var nom_maitre = $("#nom_maitre").val();
             var prenom_maitre = $("#prenom_maitre").val();
             var statut_maitre = $("#statut_maitre").val();
@@ -232,6 +266,8 @@ $num = $list[0]->Num_etudiant;
             var email_maitre = $("#email_maitre").val();
 
             //Maitre 2
+            var civilite_maitre2 = $("#civilite_maitre2").val();
+
             var nom_maitre2 = $("#nom_maitre2").val();
             var prenom_maitre2 = $("#prenom_maitre2").val();
             var statut_maitre2 = $("#statut_maitre2").val();
@@ -254,12 +290,12 @@ $num = $list[0]->Num_etudiant;
             var avantages = $("#avantages").val();
 
             //Convention
+            var civilite_signataire = $("#civilite_signataire").val();
+            
             var nom_signataire = $("#nom_signataire").val();
             var prenom_signataire = $("#prenom_signataire").val();
 
 
-            console.log(nom_signataire);
-            console.log(prenom_signataire);
 
 
             if($("#accept_covid").prop("checked")==false)
@@ -272,11 +308,12 @@ $num = $list[0]->Num_etudiant;
             }
             else
             {
-                ajouterForm(nom_entreprise,numero_siret,code_naf_ape,nom_dirigeant,prenom_dirigeant,email_entreprise,rue,cp,ville,
-                    nom_maitre,prenom_maitre,statut_maitre,poste_maitre,telephone_maitre,email_maitre,
-                        nom_maitre2,prenom_maitre2,statut_maitre2,poste_maitre2,telephone_maitre2,email_maitre2,
-                            titre_stage,description_stage,date_debut,date_fin,adresse_stage,nb_heures,ide,gratification,avantages,
-                                nom_signataire,prenom_signataire);
+                ajouterForm(civilite_signataire,civilite_maitre1,civilite_maitre2,telephone,civilite_dirigeant,fonction_dirigeant,
+                    nom_entreprise,numero_siret,code_naf_ape,nom_dirigeant,prenom_dirigeant,email_entreprise,rue,cp,ville,
+                        nom_maitre,prenom_maitre,statut_maitre,poste_maitre,telephone_maitre,email_maitre,
+                            nom_maitre2,prenom_maitre2,statut_maitre2,poste_maitre2,telephone_maitre2,email_maitre2,
+                                titre_stage,description_stage,date_debut,date_fin,adresse_stage,nb_heures,ide,gratification,avantages,
+                                    nom_signataire,prenom_signataire);
             }
 
             
@@ -288,11 +325,12 @@ $num = $list[0]->Num_etudiant;
     	});
     </script>
     <script>
-    	function ajouterForm(nom_entreprise,numero_siret,code_naf_ape,nom_dirigeant,prenom_dirigeant,email_entreprise,rue,cp,ville,
-            nom_maitre,prenom_maitre,statut_maitre,poste_maitre,telephone_maitre,email_maitre,
-                nom_maitre2,prenom_maitre2,statut_maitre2,poste_maitre2,telephone_maitre2,email_maitre2,
-                        titre_stage,description_stage,date_debut,date_fin,adresse_stage,nb_heures,ide,gratification,avantages,
-                            nom_signataire,prenom_signataire)
+    	function ajouterForm(civilite_signataire,civilite_maitre1,civilite_maitre2,telephone,civilite_dirigeant,fonction_dirigeant,
+            nom_entreprise,numero_siret,code_naf_ape,nom_dirigeant,prenom_dirigeant,email_entreprise,rue,cp,ville,
+                nom_maitre,prenom_maitre,statut_maitre,poste_maitre,telephone_maitre,email_maitre,
+                    nom_maitre2,prenom_maitre2,statut_maitre2,poste_maitre2,telephone_maitre2,email_maitre2,
+                            titre_stage,description_stage,date_debut,date_fin,adresse_stage,nb_heures,ide,gratification,avantages,
+                                nom_signataire,prenom_signataire)
     	{
     		$.ajax({
                 url:"../Controller/addFormEntreprise.php",
@@ -301,7 +339,8 @@ $num = $list[0]->Num_etudiant;
                             "nom_maitre":nom_maitre,"prenom_maitre":prenom_maitre,"statut_maitre":statut_maitre,"poste_maitre":poste_maitre,"telephone_maitre":telephone_maitre,"email_maitre":email_maitre,
                                 "nom_maitre2":nom_maitre2,"prenom_maitre2":prenom_maitre2,"statut_maitre2":statut_maitre2,"poste_maitre2":poste_maitre2,"telephone_maitre2":telephone_maitre2,"email_maitre2":email_maitre2,
                                     "titre_stage":titre_stage,"description_stage":description_stage,"date_debut":date_debut,"date_fin":date_fin,"adresse_stage":adresse_stage,"nb_heures":nb_heures,"ide":ide,"gratification":gratification,"avantages":avantages,
-                                        "nom_signataire":nom_signataire,"prenom_signataire":prenom_signataire},
+                                        "nom_signataire":nom_signataire,"prenom_signataire":prenom_signataire,
+                                            "civilite_signataire":civilite_signataire,"civilite_maitre1":civilite_maitre1,"civilite_maitre2":civilite_maitre2,"telephone":telephone,"civilite_dirigeant":civilite_dirigeant,"fonction_dirigeant":fonction_dirigeant},
                 method:"get",
                 success: function(result)
                 {
