@@ -21,7 +21,7 @@
 
 
 <!-- SweetAlert -->
-//<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 <link href="//cdn.jsdelivr.net/npm/@sweetalert2/theme-dark@3/dark.css" rel="stylesheet">
 <script src="//cdn.jsdelivr.net/npm/sweetalert2@9/dist/sweetalert2.min.js"></script>
@@ -186,7 +186,7 @@
                             <label >
                             <input type="checkbox" /> Formulaire Etudiant Non Rempli</label>
                             <br />
-                           <button  onclick="myFunction()"> j </button>
+                         
                            
   </div>
 
@@ -923,7 +923,7 @@ $(document).ready(function() {
 		alert('hello');
 		$(".item_check").click(function() {
 			$("#loader").show();
-			var action : 'data';
+			var action = 'data';
 			var stageTrouve = get_filter_text('stageTrouve');
 			var stageNonTrouve = get_filter_text('stageNonTrouve');
 			var accordEtudiantApprouve = get_filter_text('accordEtudiantApprouve');
