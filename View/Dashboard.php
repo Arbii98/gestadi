@@ -191,7 +191,7 @@
   </div>
 
 </div>
-
+<center><button class="btn btn-success" id="searchFiltreBtn">Confirmer</button> <button id="reload" class="btn btn-dark"><span class="mdi mdi-reload"></span></button></center>
 
 
 </div>
@@ -201,7 +201,7 @@
           <div style="text-align:center;">
 <img src="https://th.bing.com/th/id/R.2351827d896995f1f6e12e89176f3d9b?rik=t258KJio4%2bo0PA&pid=ImgRaw&r=0" width="200" style="display:none;" id="loader" />
   </div>
-  <h5 class="text-center text-pink-600 font-bold"  id="textChange"  >All Informations </h5>
+  <h5 class="text-center text-pink-600 font-bold"  id="textChange"  >Liste </h5>
   <br />
             <div class="w-full overflow-x-auto">
               <table id="array" class="w-full whitespace-no-wrap">
@@ -914,15 +914,17 @@ function sort_accord()
 </script>
 
 <script>
-	if ($('input[id=stageTrouve]').is(':checked')) {
-		alert("jQuery c'est super");
-	} else {
-		alert("jQuery c'est autre chose");
-	}
+	// if ($('input[id=stageTrouve]').is(':checked')) {
+	// 	alert("jQuery c'est super");
+	// } else {
+	// 	alert("jQuery c'est autre chose");
+	// }
 
+  $("#reload").click(function(){
+    window.location.reload();
+  });
 $(document).ready(function() {
-		alert('hello');
-		$(".item_check").click(function() {
+		$("#searchFiltreBtn").click(function() {
 			$("#loader").show();
 			var action = 'data';
 			var stageTrouve = get_filter_text('stageTrouve');

@@ -219,5 +219,100 @@
             
         }
 
+
+		//NEW
+		
+
+		function getData($sqlQuery) {
+			$db = config::getConnexion();
+			$result = $db->query($sqlQuery);
+			if(!$result){
+				die('Error in query: '. mysqli_error());
+			}
+			$data= array();
+			while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) {
+				$data[]=$row;            
+			}
+			return $data;
+		}
+		
+		 function getNumRows($sqlQuery) {
+			$result =$db->query($sqlQuery);
+			if(!$result){
+				die('Error in query: '. mysqli_error());
+			}
+			$numRows = mysqli_num_rows($result);
+			return $numRows;
+		}
+		public function cleanString($str){
+			return str_replace(' ','_',$str);
+		}
+
+		public function getstudents() {
+		
+			
+			$sql= "SELECT e.id, e.Num_etudiant, e.Nom_etudiant, e.Prenom_etudiant, e.Date_naissance_etudiant, e.Adresse_etudiant, 
+			e.Tel_etudiant, e.Email_etudiant, e.STAGE_TROUVE,e.ACCORD_ETUDIANT,e.Attestation_url, s.Identifiant_stage, 
+			s.Titre_stage, s.Description_stage, s.Date_debut_stage, s.Date_fin_stage,s.Nb_heures_semaine_stage,t.Identifiant_tuteur , t.nom_tuteur, t.prenom_tuteur,t.Email_tuteur
+			,en.Identifiant_entreprise ,en.Nom_entreprise,en.Email_entreprise,en.rue,en.cp,en.ville,en.SIRET_entreprise,en.NAF_APE_entreprise
+			 FROM etudiant e left join stage s on s.id_etudiant = e.id left join tuteur t on t.Identifiant_tuteur =s.Identifiant_tuteur left join entreprise en on en.Identifiant_entreprise =s.Identifiant_entreprise";	
+			if(isset($_POST['category']) && $_POST['category']!=""){			
+				$sql.=" having t.Identifiant_tuteur in ('".implode("','",$_POST['category'])."')";
+			}
+			if(isset($_POST['brand']) && $_POST['brand']!=""){			
+				$sql.=" AND brand IN ('".implode("','",$_POST['brand'])."')";
+			}
+			if(isset($_POST['material']) && $_POST['material']!="") {			
+				$sql.=" AND material IN ('".implode("','",$_POST['material'])."')";
+			}		
+			if(isset($_POST['size']) && $_POST['size']!="") {			
+				$sql.=" AND size IN (".implode(',',$_POST['size']).")";
+			}
+			
+			if(isset($_POST['sorting']) && $_POST['sorting']!="") {
+				$sorting = implode("','",$_POST['sorting']);			
+				if($sorting == 'newest' || $sorting == '') {
+					$sql.=" ORDER BY id DESC";
+				} else if($sorting == 'low') {
+					$sql.=" ORDER BY price ASC";
+				} else if($sorting == 'high') {
+					$sql.=" ORDER BY price DESC";
+				}
+			} else {
+				$sql.=" ORDER BY id DESC";
+			}		
+			
+			$products = $this->getData($sql);		
+			$productHTML = '';
+			if(isset($products) && count($products)) {			
+				foreach ($products  as $product) {				
+					//$productHTML .= '<article class="col-md-4 col-sm-6">';
+					$productHTML .= '<div class="thumbnail product">';
+					
+					$productHTML .= '<div class="caption">';
+					$productHTML .= '<a href="" class="product-name">'.$product->Prenom_etudiant.'</a>';
+					$productHTML .= '</div>';
+					$productHTML .= '</div>';
+					//$productHTML .= '</article>';				
+				}
+			}
+			return 	$productHTML;	
+		}
+		
+		function getAllTuteurs2(){
+			$sql="select Identifiant_tuteur,Nom_tuteur,Prenom_tuteur from tuteur";
+			$db = config::getConnexion();
+			try{
+                $liste=$db->query($sql);
+                return $liste->fetchAll(PDO::FETCH_OBJ);
+	            
+	           
+	        }
+	        catch (Exception $e){
+	            echo 'Erreur: '.$e->getMessage();
+	        }
+		}
+	
+
 	}
 ?>
