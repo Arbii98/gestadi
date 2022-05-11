@@ -16,10 +16,13 @@ $templateProcessor = new \PhpOffice\PhpWord\TemplateProcessor('files/Convention.
 
 include "../DB/Config.php";
 include "EtudiantCore.php";
-
+include "MaitreCore.php";
 $etudiantC = new EtudiantCore();
 $etudiant = $etudiantC->getEtudiantForConvention($_GET["id"])[0];
-var_dump($etudiant);
+
+$maitreC = new MaitreCore();
+$maitre1 = $maitreC->getMaitreByEntreprise($etudiant->Identifiant_entreprise)[0];
+
 
 $debut = strtotime($etudiant->Date_debut_stage);
 $fin = strtotime($etudiant->Date_fin_stage);
@@ -46,12 +49,12 @@ $templateProcessor->setValue('TEL_ENTREPRISE', $etudiant->Telephone_entreprise);
 $templateProcessor->setValue('MAIL_ENTREPRISE', $etudiant->Email_entreprise);
 
 // MAITRE STAGE
-// Tuteur dans la convention est le maitre ?
-$templateProcessor->setValue('NOM_MAITRE', 'XXX');
-$templateProcessor->setValue('PRENOM_MAITRE', 'XXX');
-$templateProcessor->setValue('FONCTION_MAITRE', 'XXX');
-$templateProcessor->setValue('TEL_MAITRE', 'XXX');
-$templateProcessor->setValue('MAIL_MAITRE', 'XXX');
+// Tuteur dans la convention est le maitre de stage
+$templateProcessor->setValue('NOM_MAITRE', $maitre1->Nom_super);
+$templateProcessor->setValue('PRENOM_MAITRE', $maitre1->Prenom_super);
+$templateProcessor->setValue('FONCTION_MAITRE', $maitre1->Poste_occupe);
+$templateProcessor->setValue('TEL_MAITRE', $maitre1->Tel_super);
+$templateProcessor->setValue('MAIL_MAITRE', $maitre1->Email_super);
 
 // ETUDIANT
 
@@ -67,7 +70,8 @@ $templateProcessor->setValue('MAIL_ETUDIANT', $etudiant->Email_etudiant);
 
 // STAGE
 $templateProcessor->setValue('MISSION_STAGE', $etudiant->Titre_stage); //Difference entre mission et titre ?
-$templateProcessor->setValue('SUJET_STAGE', $etudiant->Titre_stage);
+//$templateProcessor->setValue('SUJET_STAGE', $etudiant->Titre_stage);
+$templateProcessor->setValue('SUJET_STAGE', "");
 $templateProcessor->setValue('DATE_DEBUT_STAGE', $etudiant->Date_debut_stage);
 $templateProcessor->setValue('DATE_FIN_STAGE', $etudiant->Date_fin_stage);
 

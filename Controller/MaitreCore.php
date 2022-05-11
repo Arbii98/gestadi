@@ -24,6 +24,20 @@
 	        }
         }
 
+        function getMaitreByEntreprise($id){
+			$sql="SELECT * FROM maitre_de_stage WHERE Identifiant_entreprise=$id";
+			 $db = config::getConnexion();
+			try{
+                $liste=$db->query($sql);
+                return $liste->fetchAll(PDO::FETCH_OBJ);
+	            
+	           
+	        }
+	        catch (Exception $e){
+	            echo 'Erreur: '.$e->getMessage();
+	        }
+		}
+
     }
 
 
