@@ -16,13 +16,37 @@
   
 
 ?>
+
 <script src="https://cdn.tailwindcss.com"></script>
-<script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer></script>
+
+
+<!-- SweetAlert -->
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<link href="//cdn.jsdelivr.net/npm/@sweetalert2/theme-dark@3/dark.css" rel="stylesheet">
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@9/dist/sweetalert2.min.js"></script>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.slim.js"></script>
+<!-- Jquery JS-->
+<script src="vendor/jquery/jquery.min.js"></script>
+<!-- jQuery library -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.9.2/umd/popper.min.js"></script>
+
+<!-- Popper JS -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+<!-- Latest compiled JavaScript -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"></script>
+
+<script src="//code.jquery.com/jquery-1.10.2.min.js"></script>
+<script src="js/jquery-1.10.2.min.js"></script>
+    <script src="js/jquery-ui.js"></script>
+
 
 
 
 <main class="h-full overflow-y-auto">
-  <div class="container px-6 mx-auto grid">
+  <div  class="container px-6 mx-auto grid">
               <!-- Cards -->
           <div class="grid gap-6 mb-8 md:grid-cols-2 xl:grid-cols-4">
             <!-- Card -->
@@ -119,10 +143,66 @@
            <!-- Card -->
            
           </div>
-
+       
+          <br/>
         <input class="form-control" style="width : 25%" placeholder="Chercher.." id="myInput"><br>
-          
-        <div class="w-full overflow-hidden rounded-lg shadow-xs">
+       <h3> Checher Par :</h3>
+<br />
+<div class="p-8 bg-white shadow-2xl" >
+<h3 class="text-center">Filtres Avancées :</h3>
+<br />
+
+<div  style="display:flex;justify-content:space-evenly;flex-wrap:wrap;flex-direction:row">
+
+<div >
+   <label >
+                            <input type="checkbox" class="form_check_input item_check" value="stageTrouve" id="stageTrouve" /> Stage Trouvé</label>
+                            <br />
+                            <label > 
+                            <input type="checkbox" class="form_check_input item_check" value="stageNonTrouve" id="stageNonTrouve" /> Stage Non Trouvé</label>
+                            <br />
+                            <label >
+                            <input type="checkbox" class="form_check_input item_check" value="accordEtudiantApprouve" id="AccordEtudiantApprouve" /> Accord Etudiant Approuvé</label>
+                            <br />
+                            <label >
+                            <input type="checkbox" class="form_check_input item_check" id=" accordEtudiantNonApprouve" value=" AccordEtudiantNonApprouve" /> Accord Etudiant Non Approuvé</label>
+                            <br />
+                            <label >
+                            <input type="checkbox" class="form_check_input item_check" id="listeDeTuteurs" value="listeDesTuteurs" /> Liste des tuteurs</label>
+                            <br />
+                            
+                         
+  </div>
+  <div >
+  <label >
+                            <input type="checkbox" /> Formulaire Entreprise Rempli</label>
+                            <br />
+                            <label >
+                            <input type="checkbox" /> Formulaire Entreprise Non Rempli</label>
+                            <br />
+                            <label >
+                            <input type="checkbox" /> Formulaire Etudiant Rempli</label>
+                            <br />
+                            <label >
+                            <input type="checkbox" /> Formulaire Etudiant Non Rempli</label>
+                            <br />
+                         
+                           
+  </div>
+
+</div>
+
+
+
+</div>
+<br />
+
+        <div class="container w-full overflow-hidden rounded-lg shadow-xs" id="result">
+          <div style="text-align:center;">
+<img src="https://th.bing.com/th/id/R.2351827d896995f1f6e12e89176f3d9b?rik=t258KJio4%2bo0PA&pid=ImgRaw&r=0" width="200" style="display:none;" id="loader" />
+  </div>
+  <h5 class="text-center text-pink-600 font-bold"  id="textChange"  >All Informations </h5>
+  <br />
             <div class="w-full overflow-x-auto">
               <table id="array" class="w-full whitespace-no-wrap">
                 <thead>
@@ -133,7 +213,7 @@
                     <th class="px-4 py-3" onclick="sort_stage()">Stage Trouvé</th>
                     <th class="px-4 py-3" onclick="sort_form_etudiant()">Formulaire Etudiant</th>
                     <th class="px-4 py-3" onclick="sort_form_entreprise()">Formulaire Entreprise</th>
-                    <th class="px-4 py-3">Accord Etudiant</th>
+                    <th class="px-4 py-3" onclick="sort_accord()">Accord Etudiant</th>
                     <th class="px-4 py-3">Date Debut</th>
                     <th class="px-4 py-3">Date Fin</th>
                     <th class="px-4 py-3">Actions</th>
@@ -192,7 +272,7 @@
                                 <form action="../Controller/affecterTuteur.php" method="POST" onsubmit="setTimeout(function(){window.location.reload();},20);">
                                
                             <div class="form-group mb-4">
-                                <label for=""  style="font-weight: bold;font-size:20px;margin-bottom:2%">Choisir un Tuteur pour <?php echo $row->Nom_etudiant." ".$row->Prenom_etudiant ?>:</label> <br>
+                                <label   style="font-weight: bold;font-size:20px;margin-bottom:2%">Choisir un Tuteur pour <?php echo $row->Nom_etudiant." ".$row->Prenom_etudiant ?>:</label> <br>
                                   <br>
                                 <input type="hidden" id="custId" name="stageId" value="<?php echo $row->Identifiant_stage?>">
                                 <input type="radio" name="affecterTuteur" value="-1"  style="height:20px; width:20px; vertical-align: middle;padding-bottom:4%;margin-left:10%;font-size:20px;">
@@ -507,21 +587,11 @@
             </div>
         </div>
        
-	<!-- SweetAlert -->
-  <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+	
 
-<link href="//cdn.jsdelivr.net/npm/@sweetalert2/theme-dark@3/dark.css" rel="stylesheet">
-<script src="//cdn.jsdelivr.net/npm/sweetalert2@9/dist/sweetalert2.min.js"></script>
-<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-<script src="https://code.jquery.com/jquery-3.6.0.slim.js"></script>
-<!-- Jquery JS-->
-<script src="vendor/jquery/jquery.min.js"></script>
 
-<script type="text/javascript">
-    	// $(document).ready(function(){
-     //         swal("Oops!", "Vous devez remplir le formulaire avant l\'envoie !", "error");
-     //    });
-    </script>
+
+
     <script type="text/javascript">
     	$(".getcode").click(function(){
         var id = $(this).attr("id");
@@ -617,6 +687,9 @@
 <input type="hidden" id="sort_etudiant" value="asc">
 <input type="hidden" id="sort_tuteur" value="asc">
 <input type="hidden" id="sort_stage" value="asc">
+
+
+
 <script>
 function sort_form_etudiant()
 {
@@ -764,6 +837,35 @@ function sort_stage()
   document.getElementById("sort_stage").value="asc";
  }
 }
+function sort_accord()
+{
+ var table=$('#array');
+ var tbody =$('#myTable');
+
+ tbody.find('tr').sort(function(a, b) 
+ {
+  if($('#sort_accord').val()=='asc') 
+  {
+   return $('td:nth-child(6)', a).text().localeCompare($('td:nth-child(6)', b).text());
+  }
+  else 
+  {
+   return $('td:nth-child(6)', b).text().localeCompare($('td:nth-child(6)', a).text());
+  }
+		
+ }).appendTo(tbody);
+	
+ var sort_order=$('#sort_accord').val();
+ if(sort_order=="asc")
+ {
+  document.getElementById("sort_accord").value="desc";
+ }
+ if(sort_order=="desc")
+ {
+  document.getElementById("sort_accord").value="asc";
+ }
+}
+
 
 
 
@@ -790,6 +892,7 @@ function sort_stage()
       }      
     });
 </script>
+
 <script type="text/javascript">
     $(document).on('click','.status_accord_checks',function(){
       var status = ($(this).hasClass("btn-success")) ? '0' : '1';
@@ -810,6 +913,46 @@ function sort_stage()
     });
 </script>
 
+<script>
+	if ($('input[id=stageTrouve]').is(':checked')) {
+		alert("jQuery c'est super");
+	} else {
+		alert("jQuery c'est autre chose");
+	}
+
+$(document).ready(function() {
+		alert('hello');
+		$(".item_check").click(function() {
+			$("#loader").show();
+			var action = 'data';
+			var stageTrouve = get_filter_text('stageTrouve');
+			var stageNonTrouve = get_filter_text('stageNonTrouve');
+			var accordEtudiantApprouve = get_filter_text('accordEtudiantApprouve');
+			var accordEtudiantNonApprouve = get_filter_text('accordEtudiantNonApprouve');
+	$.ajax({
+			url:'action.php',
+			method:'POST',
+			data:{action:action , stageTrouve:stageTrouve,stageNonTrouve:stageNonTrouve,accordEtudiantApprouve:accordEtudiantApprouve,accordEtudiantNonApprouve:accordEtudiantNonApprouve},
+			success:function(response){
+			 $("#result").html(response);
+			 $("#loader").hide();
+			$("#textChange").text("Filtred Informations ");
+
+			}
+			})
+
+      function get_filter_text(text_id){
+   var filterData=[];
+   $('#'+text_id+':checked').each(function(){
+
+    filterData.push($(this).val());
+   });
+   return filterData;
+
+ }
+		});
+
+	}) 	</script>
 
 
 
