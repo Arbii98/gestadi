@@ -1,12 +1,12 @@
 /* Sidebar */
 
 .sidebar {
-  min-height: calc(100vh - #{$navbar-height});
+  min-height: calc(10vh - #{$navbar-height});
   background: $sidebar-light-bg;
   font-family: $type-1;
   font-weight: $font-weight-regular;
   padding: 0;
-  width: $sidebar-width-lg;
+  width: 10%;
   z-index: 11;
   border-right: 1px solid $border-color;
   transition: width $action-transition-duration $action-transition-timing-function,

@@ -145,9 +145,13 @@
           </div>
        
           <br/>
-        <input class="form-control" style="width : 25%" placeholder="Chercher.." id="myInput"><br>
+        
        <h3> Checher Par :</h3>
 <br />
+
+<form action="" method="GET">
+
+
 <div class="p-8 bg-white shadow-2xl" >
 <h3 class="text-center">Filtres Avancées :</h3>
 <br />
@@ -155,46 +159,74 @@
 <div  style="display:flex;justify-content:space-evenly;flex-wrap:wrap;flex-direction:row">
 
 <div >
+  <?php   
+  $cheked= [];
+
+  $checked = [];
+  if(isset($_GET['filters']))
+  {
+      $checked = $_GET['filters'];
+  }
+  
+ if (isset($_GET['cancelAll'])) {
+  $checked=[];
+}
+ 
+
+
+
+  ?>
    <label >
-                            <input type="checkbox" class="form_check_input item_check" value="stageTrouve" id="stageTrouve" /> Stage Trouvé</label>
+                            <input type="checkbox" class="form_check_input item_check" name="filters[]" value="stageTrouve" id="stageTrouve"  <?php if(in_array('stageTrouve', $checked)){ echo "checked"; } ?>/> Stage Trouvé</label>
                             <br />
                             <label > 
-                            <input type="checkbox" class="form_check_input item_check" value="stageNonTrouve" id="stageNonTrouve" /> Stage Non Trouvé</label>
+                            <input type="checkbox" class="form_check_input item_check" name="filters[]" value="stageNonTrouve" id="stageNonTrouve" <?php if(in_array('stageNonTrouve', $checked)){ echo "checked"; } ?>/> Stage Non Trouvé</label>
                             <br />
                             <label >
-                            <input type="checkbox" class="form_check_input item_check" value="accordEtudiantApprouve" id="AccordEtudiantApprouve" /> Accord Etudiant Approuvé</label>
+                            <input type="checkbox" class="form_check_input item_check" name="filters[]" value="accordEtudiantApprouve" id="AccordEtudiantApprouve" <?php if(in_array('accordEtudiantApprouve', $checked)){ echo "checked"; } ?>/> Accord Etudiant Approuvé</label>
                             <br />
                             <label >
-                            <input type="checkbox" class="form_check_input item_check" id=" accordEtudiantNonApprouve" value=" AccordEtudiantNonApprouve" /> Accord Etudiant Non Approuvé</label>
+                            <input type="checkbox" class="form_check_input item_check" name="filters[]" id="accordEtudiantNonApprouve" value="AccordEtudiantNonApprouve" <?php if(in_array('AccordEtudiantNonApprouve', $checked)){ echo "checked"; } ?>/> Accord Etudiant Non Approuvé</label>
                             <br />
-                            <label >
-                            <input type="checkbox" class="form_check_input item_check" id="listeDeTuteurs" value="listeDesTuteurs" /> Liste des tuteurs</label>
-                            <br />
+                            
                             
                          
   </div>
   <div >
   <label >
-                            <input type="checkbox" /> Formulaire Entreprise Rempli</label>
+                            <input type="checkbox" name="filters[]" id="FormeEntrepRemp" value="FormeEntrepRemp"<?php if(in_array('FormeEntrepRemp', $checked)){ echo "checked"; } ?>/> Formulaire Entreprise Rempli</label>
                             <br />
                             <label >
-                            <input type="checkbox" /> Formulaire Entreprise Non Rempli</label>
+                            <input type="checkbox" name="filters[]" id="FormeEntrepNonRemp" value="FormeEntrepNonRemp"<?php if(in_array('FormeEntrepNonRemp', $checked)){ echo "checked"; } ?>/> Formulaire Entreprise Non Rempli</label>
                             <br />
                             <label >
-                            <input type="checkbox" /> Formulaire Etudiant Rempli</label>
+                            <input type="checkbox" name="filters[]" id="FormeEtudiantRemp" value="FormeEtudiantRemp"<?php if(in_array('FormeEtudiantRemp', $checked)){ echo "checked"; } ?>/> Formulaire Etudiant Rempli</label>
                             <br />
                             <label >
-                            <input type="checkbox" /> Formulaire Etudiant Non Rempli</label>
+                            <input type="checkbox" name="filters[]" id="FormeEtudiantNonRemp" value="FormeEtudiantNonRemp"<?php if(in_array('FormeEtudiantNonRemp', $checked)){ echo "checked"; } ?>/> Formulaire Etudiant Non Rempli</label>
                             <br />
                          
                            
   </div>
 
 </div>
-<center><button class="btn btn-success" id="searchFiltreBtn">Confirmer</button> <button id="reload" class="btn btn-dark"><span class="mdi mdi-reload"></span></button></center>
+<center>
+  <button type="submit"  class="btn btn-success" id="searchFiltreBtn" style="background-color:green">Confirmer</button> 
+  <button  type="submit" name="cancelAll" class="btn btn-dark" style="background-color:black"><span class="mdi mdi-reload"></span></button>
+
+</center>
+  
+
+<?php 
 
 
+if(isset($_GET['filters'])){
+  $listEtudiants=$etudiantC->getETudiantsFilter($checked);
+}
+
+?>
 </div>
+</form>
 <br />
 
         <div class="container w-full overflow-hidden rounded-lg shadow-xs" id="result">
@@ -203,19 +235,21 @@
   </div>
   <h5 class="text-center text-pink-600 font-bold"  id="textChange"  >Liste </h5>
   <br />
+  <input class="form-control"  style="width : 30%" placeholder="charcher par nom de tuteur ou nom d'étudiant ..." id="myInput">
+  <br />
             <div class="w-full overflow-x-auto">
               <table id="array" class="w-full whitespace-no-wrap">
                 <thead>
                   <tr
                     class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800"  style="background-color : #E5007D; color : white">
-                    <th class="px-4 py-3" onclick="sort_etudiant()">Etudiant</th>
-                    <th class="px-4 py-3" onclick="sort_tuteur()">Tuteur Iut</th>
+                    <th class="px-4 py-3" onclick="sort_etudiant()">Etudiant <br /> </th>
+                    <th class="px-4 py-3" onclick="sort_tuteur()">Tuteur Iut </th>
                     <th class="px-4 py-3" onclick="sort_stage()">Stage Trouvé</th>
                     <th class="px-4 py-3" onclick="sort_form_etudiant()">Formulaire Etudiant</th>
                     <th class="px-4 py-3" onclick="sort_form_entreprise()">Formulaire Entreprise</th>
                     <th class="px-4 py-3" onclick="sort_accord()">Accord Etudiant</th>
                     <th class="px-4 py-3">Date Debut</th>
-                    <th class="px-4 py-3">Date Fin</th>
+                   
                     <th class="px-4 py-3">Actions</th>
                   </tr>
                 </thead>
@@ -352,9 +386,7 @@
                     <td class="px-4 py-3 text-sm">
                       <?=$row->Date_debut_stage?>
                     </td>
-                    <td class="px-4 py-3 text-sm">
-                    <?=$row->Date_fin_stage?>
-                    </td>
+                    
                     <td class="px-4 py-3 text-sm">
                     <div style=" display: flex; align-content: space-between;">
                         <a href="../Controller/ConventionGenerator.php?id=<?=$row->id?>"><button class="btn btn-dark">Convention</button></a>
@@ -681,6 +713,8 @@
         });
     });
 </script>
+
+
 
 <input type="hidden" id="sort_form_etudiant" value="asc">
 <input type="hidden" id="sort_form_entreprise" value="asc">

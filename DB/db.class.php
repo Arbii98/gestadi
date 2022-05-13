@@ -3,7 +3,7 @@ class DB{
 	private $host ='localhost';
 	private $username ='root';
 	private $password = '';
-	private $database ='gestadi';
+	private $database ='projet4a';
 	private $db;
 
 	public function __construct($host=null,$username=null,$password=null,$database=null)
