@@ -42,33 +42,14 @@
           <li class="pt-2 pb-1">
             <span class="nav-item-head">Template Pages</span>
           </li>
-          <li class="nav-item">
-            <a class="nav-link" href="index.html">
-              <i class="mdi mdi-chart-arc menu-icon"></i>
-              <span class="menu-title">Dashboard</span>
-            </a>
-          </li>
 
           <li class="nav-item">
             <a class="nav-link" href="Dashboard.php">
               <i class="mdi mdi-chart-arc menu-icon"></i>
-              <span class="menu-title">Dashboard V2</span>
+              <span class="menu-title">Dashboard</span>
             </a>
           </li>
           
-          <li class="nav-item">
-            <a class="nav-link" href="etudiants.php">
-              <i class="mdi mdi-account menu-icon"></i>
-              <span class="menu-title">Etudiants</span>
-            </a>
-          </li>
-
-          <li class="nav-item">
-            <a class="nav-link" href="stage.php">
-              <i class="mdi mdi-briefcase menu-icon"></i>
-              <span class="menu-title">Stages</span>
-            </a>
-          </li>
 
           
         </ul>
